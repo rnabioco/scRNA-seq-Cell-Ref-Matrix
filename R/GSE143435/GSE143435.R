@@ -70,12 +70,16 @@ D0_FACS.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
 cluster1.markers <- FindMarkers(D0_FACS, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
 
 #Assigning cell types to identity to clusters
+# get shared cell ids
 shared_cell_ids <- intersect(rownames(D0_FACS@meta.data), D0_FACSatlasMetadata$X1)
+# subset metadata
 D0_FACSatlasMetadata <- filter(D0_FACSatlasMetadata, X1 %in% shared_cell_ids)
+# reorder metadata
 reorder_idx <- match(rownames(D0_FACS@meta.data), D0_FACSatlasMetadata$X1)
 D0_FACSatlasMetadata <- D0_FACSatlasMetadata[reorder_idx, ]
+# verify reordering
 all(rownames(D0_FACS@meta.data) == D0_FACSatlasMetadata$X1)
-
+# add major_cell_lineage vector to meta.data
 D0_FACS@meta.data$annotated <- D0_FACSatlasMetadata$cell_annotation
 head(D0_FACS@meta.data$annotated)
 new.cluster.ids <- D0_FACS@meta.data$annotated
