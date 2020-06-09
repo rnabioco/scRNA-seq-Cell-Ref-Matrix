@@ -68,3 +68,19 @@ head(cluster5.markers, n = 5)
 D0_FACS.markers <- FindAllMarkers(D0_FACS.markers, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
 D0_FACS.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
 cluster1.markers <- FindMarkers(D0_FACS, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+
+#Assigning cell types to identity to clusters
+shared_cell_ids <- intersect(rownames(D0_FACS@meta.data), D0_FACSatlasMetadata$X1)
+D0_FACSatlasMetadata <- filter(D0_FACSatlasMetadata, X1 %in% shared_cell_ids)
+reorder_idx <- match(rownames(D0_FACS@meta.data), D0_FACSatlasMetadata$X1)
+D0_FACSatlasMetadata <- D0_FACSatlasMetadata[reorder_idx, ]
+all(rownames(D0_FACS@meta.data) == D0_FACSatlasMetadata$X1)
+
+D0_FACS@meta.data$annotated <- D0_FACSatlasMetadata$cell_annotation
+head(D0_FACS@meta.data$annotated)
+new.cluster.ids <- D0_FACS@meta.data$annotated
+Idents(D0_FACS) <- "annotated"
+
+DimPlot(D0_FACS, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+head(Idents(D0_FACS), 5)
+                    
