@@ -59,3 +59,12 @@ head(Idents(D0_FACS), 5)
 #Non-linear dimensional reduction (UMAP/tSNE)
 D0_FACS <- RunUMAP(D0_FACS, dims = 1:10)
 DimPlot(D0_FACS, reduction = "umap")
+
+#Cluster for cell marking
+cluster1.markers <- FindMarkers(D0_FACS, ident.1 = 1, min.pct = 0.25)
+head(cluster1.markers, n = 5)
+cluster5.markers <- FindMarkers(D0_FACS, ident.1 = 5, ident.2 = 0, min.pct = 0.25)
+head(cluster5.markers, n = 5)
+D0_FACS.markers <- FindAllMarkers(D0_FACS.markers, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+D0_FACS.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
+cluster1.markers <- FindMarkers(D0_FACS, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
