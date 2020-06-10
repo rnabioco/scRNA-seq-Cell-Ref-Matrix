@@ -86,6 +86,12 @@ head(D0_FACS@meta.data$annotated)
 new.cluster.ids <- D0_FACS@meta.data$annotated
 Idents(D0_FACS) <- "annotated"
 
+#Annotated UMAP
 DimPlot(D0_FACS, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 head(Idents(D0_FACS), 5)
-                    
+
+#Reference matrix build
+new_ref_matrix <- average_clusters(mat = D0_FACSatlas, metadata = D0_FACS@meta.data$annotated, if_log = TRUE) #Using clustifyr seurat_ref function
+head(new_ref_matrix)
+tail(new_ref_matrix)            
+saveRDS(new_ref_matrix, "GSE143435D0.rds")
