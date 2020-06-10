@@ -18,10 +18,10 @@ sum(colnames(D0_FACSatlas) %in% D0_FACSatlasMetadata$X1)
 ncol(D0_FACSatlas)
 
 #Preprocessing workflow
-D0_FACS <- CreateSeuratObject(counts = D0_FACSatlas, project = "MouseAtlas", min.cells = 3, min.features = 200)
+D0_FACS <- CreateSeuratObject(counts = D0_FACSatlas %>% t(), project = "MouseAtlas", min.cells = 3, min.features = 200)
 D0_FACS
 D0_FACS@assays$RNA@data <- D0_FACS@assays$RNA@counts
-D0_FACS[["percent.mt"]] <- PercentageFeatureSet(D0_FACS, pattern = "^MT")
+D0_FACS[["percent.mt"]] <- D0_FACSatlasMetadata$percent_mito
 head(D0_FACS@meta.data, 5)
 VlnPlot(D0_FACS, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 plot1 <- FeatureScatter(D0_FACS, feature1 = "nCount_RNA", feature2 = "percent.mt")
