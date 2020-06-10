@@ -13,6 +13,7 @@ D0_FACSatlas <- D0_FACSatlas %>%
 D0_FACSatlas[1:5, 1:5]
 
 D0_FACSatlasMetadata <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D0_FACSatlas_metadata.txt.gz")
+D0_FACSatlasMetadata
 sum(colnames(D0_FACSatlas) %in% D0_FACSatlasMetadata$X1)
 ncol(D0_FACSatlas)
 
