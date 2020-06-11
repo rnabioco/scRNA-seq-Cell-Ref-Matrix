@@ -11,3 +11,12 @@ KinaseScreen <- KinaseScreen %>%
   as.matrix() %>% 
   t()
 KinaseScreen[1:5, 1:5]
+
+meta_KinaseScreen <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147405/suppl/GSE147405_OVCA420_EGF_KinaseScreen_metadata.csv.gz")
+sum(colnames(KinaseScreen) %in% meta_KinaseScreen$CellLine)
+ncol(KinaseScreen)
+
+new_ref_matrix <- average_clusters(mat = KinaseScreen, metadata = meta_KinaseScreen$CellLine, if_log = TRUE)
+head(new_ref_matrix)
+tail(new_ref_matrix)
+saveRDS(new_ref_matrix, "GSE147405.rds")
