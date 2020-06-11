@@ -19,8 +19,13 @@ mat_PFC[1:5, 1:5]
 
 meta_PFC <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124952/suppl/GSE124952_meta_data.csv.gz")
 meta_PFC
-sum(colnames(mat_PFC) %in% meta_PFC$X1)
+sum(colnames(mat_PFC) %in% meta_PFC$CellType)
 ncol(mat_PFC)
+
+new_ref_matrix <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = TRUE)
+head(new_ref_matrix)
+tail(new_ref_matrix)
+saveRDS(new_ref_matrix, "GSE124952.rds")
 
 #Preprocessing workflow
 PFC <- CreateSeuratObject(counts = mat_PFC, project = "MousePFC", min.cells = 3, min.features = 200)
