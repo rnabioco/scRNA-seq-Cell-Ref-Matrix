@@ -16,6 +16,11 @@ meta_FibroblastNucleiDiabetes <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series
 sum(colnames(mat_FibroblastNucleiDiabetes) %in% meta_FibroblastNucleiDiabetes$orig.ident)
 ncol(mat_FibroblastNucleiDiabetes)
 
+new_ref_matrix <- average_clusters(mat = mat_FibroblastNucleiDiabetes, metadata = meta_FibroblastNucleiDiabetes$trt, if_log = TRUE)
+head(new_ref_matrix)
+tail(new_ref_matrix)
+saveRDS(new_ref_matrix, "GSE148946.rds")
+
 FibroblastNucleiDiabetes <- CreateSeuratObject(counts = mat_FibroblastNucleiDiabetes, project = "FibroblastNucleiDiabetes", min.cells = 3, min.features = 200)
 FibroblastNucleiDiabetes
 FibroblastNucleiDiabetes@assays$RNA@data <- FibroblastNucleiDiabetes@assays$RNA@counts
