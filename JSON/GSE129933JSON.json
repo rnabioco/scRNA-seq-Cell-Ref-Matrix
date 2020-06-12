@@ -1,0 +1,15 @@
+{
+    "GEOAccession": "GSE129933",
+    "MatrixFilename": "GSE129933_count_matrix.tsv.gz",
+    "MetadataFilename": "GSE129933_cell_metadata.tsv.gz",
+    "CellType": [
+        "Astro",
+        "Endo",
+        "Excitatory",
+        "Microglia",
+        "NF Oligo",
+        "Oligo",
+        "OPC"
+    ],
+    "NumberOfCellsPerCluster": ""
+}
