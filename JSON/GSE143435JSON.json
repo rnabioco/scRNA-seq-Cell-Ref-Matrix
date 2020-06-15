@@ -1,0 +1,15 @@
+{
+    "GEOAccession": "GSE143435",
+    "MatrixFilename": "GSE143435_DeMicheli_D0_FACSatlas_normalizeddata.txt.gz",
+    "MetadataFilename": "GSE143435_DeMicheli_D0_FACSatlas_metadata.txt.gz",
+    "CellType": [
+        "Endothelial",
+        "FAPs",
+        "Immune",
+        "Neural/Glial/Schwann cells",
+        "Platelets",
+        "Smooth muscle cells",
+        "Tenocytes"
+    ],
+    "NumberOfCellsPerCluster": ""
+}
