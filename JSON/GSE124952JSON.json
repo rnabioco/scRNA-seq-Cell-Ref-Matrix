@@ -2,6 +2,7 @@
     "GEOAccession": "GSE124952",
     "MatrixFilename": "GSE124952_expression_matrix.csv.gz",
     "MetadataFilename": "GSE124952_meta_data.csv.gz",
+    "Organism": "Mus musculus",
     "CellType": [
         "Astro",
         "Endo",

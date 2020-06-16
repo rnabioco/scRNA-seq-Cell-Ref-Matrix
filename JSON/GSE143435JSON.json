@@ -2,6 +2,7 @@
     "GEOAccession": "GSE143435",
     "MatrixFilename": "GSE143435_DeMicheli_D0_FACSatlas_normalizeddata.txt.gz",
     "MetadataFilename": "GSE143435_DeMicheli_D0_FACSatlas_metadata.txt.gz",
+    "Organism": "Mus musculus",
     "CellType": [
         "Endothelial",
         "FAPs",
