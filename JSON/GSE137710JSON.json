@@ -1,0 +1,30 @@
+{
+    "GEOAccession": "GSE137710",
+    "MatrixFilename": [
+        "GSE137710_human_melanoma_counts_normalized_9315x19445.tsv.gz",
+        "GSE137710_human_spleen_counts_normalized_4465x12476.tsv.gz",
+        "GSE137710_mouse_spleen_counts_normalized_4464x11755.tsv.gz"
+    ],
+    "MetadataFilename": [
+        "GSE137710_human_melanoma_cell_metadata_9315x14.tsv.gz",
+        "GSE137710_human_spleen_cell_metadata_4465x9.tsv.gz",
+        "GSE137710_mouse_spleen_cell_metadata_4464x9.tsv.gz"
+    ],
+    "Organism": [
+        "Mus musculus",
+        "Homo sapiens"
+    ],
+    "CellType": [
+        "AS DC",
+        "CLEC10A- cDC2",
+        "CLEC10A+ cDC2",
+        "CCR7+ cDC2",
+        "Mitotic cDC2",
+        "Mitotic cDC1",
+        "cDC1",
+        "T/NK",
+        "b_cells",
+        "myeloid"
+    ],
+    "NumberOfCellsPerCluster": ""
+}

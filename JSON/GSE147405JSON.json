@@ -1,0 +1,10 @@
+{
+    "GEOAccession": "GSE147405",
+    "MatrixFilename": "GSE147405_OVCA420_EGF_KinaseScreen_UMI_matrix.csv.gz",
+    "MetadataFilename": "GSE147405_OVCA420_EGF_KinaseScreen_metadata.csv.gz",
+    "Organism": "Homo sapiens",
+    "CellType": [
+        "OVCA420"
+    ],
+    "NumberOfCellsPerCluster": ""
+}
