@@ -12,5 +12,14 @@
         "Smooth muscle cells",
         "Tenocytes"
     ],
+    "CellTypesHashed": [
+        "229c53977db27ca88b023f03bacf14ce95005725",
+        "ad342e659dcf5a19dc7061d51abed0d657c27569",
+        "4c20ca8120da35729c54fd2aff694fbbdcbce9a7",
+        "5ef6bbe23bb3a034e3ad5c081b1cbe54f88bc973",
+        "a5f3f1384f978eb994b074aebd88dd0fa0f4bd5a",
+        "63d0fd552b871cd69e18a2ac14635d35396e03e3",
+        "9022308b1b4ec0e6f16d7d066dc496657ea3b37e"
+    ],
     "NumberOfCellsPerCluster": ""
 }
