@@ -12,5 +12,14 @@
         "Monocytes",
         "PEC"
     ],
+    "CellTypesHashed": [
+        "2f908f3b46c6fdab85d4860e2eb4c899d6b7f656",
+        "a98ed2d26ec8cdfaf827de522dbb978c5c9e1ee8",
+        "8ff3519849797f7f00b22c9c1841a45d19d6ff00",
+        "ad81f6f8f655467f35ef570744b3ccf3d70fc725",
+        "4b46f6157f8f1877891bfc858e8ccb047508a893",
+        "ac94f523b04723bc9c3530980dc5363e7e35e4a2",
+        "c78d8697531077bd908a3fa789ba1a6ef2d8cb50"
+    ],
     "NumberOfCellsPerCluster": ""
 }

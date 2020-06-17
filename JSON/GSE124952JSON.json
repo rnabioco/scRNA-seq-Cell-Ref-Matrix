@@ -12,5 +12,15 @@
         "Oligo",
         "OPC"
     ],
+    "CellTypesHashed": [
+        "6f3a285788ef94b3d36a01b5b80ef6b783e78edc",
+        "2c45df49e6e1c24e853fbe2994a27ec79e74a4c3",
+        "e4a948cf50eea328dec96ebcde988f1e474dcfc6",
+        "3f04768f0e34504e720707247a9c5468a29ec05b",
+        "d9e882baec37a85284b9e43e21904d37dc2ad0ba",
+        "46935d2ec6e016c5912d4e5528c420e4984bf80c",
+        "43412fc06dcf3ac25297ab353e9b49dbbe1a991a",
+        "ca4dc7b511dcac7e6b38cb59585ec2bec7ce5f2e" 
+    ],
     "NumberOfCellsPerCluster": ""
 }

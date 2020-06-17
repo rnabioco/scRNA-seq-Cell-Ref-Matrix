@@ -26,5 +26,8 @@
         "b_cells",
         "myeloid"
     ],
+    "CellTypesHashed": [
+        
+    ],
     "NumberOfCellsPerCluster": ""
 }
