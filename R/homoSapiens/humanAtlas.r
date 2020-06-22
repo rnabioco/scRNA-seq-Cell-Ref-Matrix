@@ -20,4 +20,4 @@ GSE147405 <- as.data.frame(GSE147405Matrix)
 rm(GSE129933Matrix)
 rm(GSE147405Matrix)
 
-humanAtlas <- rbind(GSE129933, GSE137710, GSE147405, .id = NULL)
+bind_rows(GSE129933, GSE137710, GSE147405, .id = NULL)
