@@ -6,16 +6,22 @@ library(tidyverse)
 
 D2_FACSatlas <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D2_FACSatlas_normalizeddata.txt.gz")
 D2_FACSatlas <- D2_FACSatlas %>%
-  as.data.frame() %>%
-  column_to_rownames('X1') %>%
-  as.matrix() %>%
-  t()
+  #as.data.frame() %>%
+  column_to_rownames('X1')
+  #as.matrix() %>%
+  #t()
 D2_FACSatlas[1:5, 1:5]
 
 D2_FACSatlasMetadata <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D2_FACSatlas_metadata.txt.gz")
 D2_FACSatlasMetadata
 sum(colnames(D2_FACSatlas) %in% D2_FACSatlasMetadata$X1)
 ncol(D2_FACSatlas)
+
+#Reference matrix build
+new_ref_matrix <- average_clusters(mat = D2_FACSatlas, metadata = D2_FACSatlasMetadata$cell_annotation, if_log = TRUE) #Using clustifyr seurat_ref function
+head(new_ref_matrix)
+tail(new_ref_matrix)            
+saveRDS(new_ref_matrix, "GSE143435D2.rds")
 
 #Preprocessing workflow
 D2_FACS <- CreateSeuratObject(counts = D2_FACSatlas %>% t(), project = "MouseAtlas", min.cells = 3, min.features = 200)
