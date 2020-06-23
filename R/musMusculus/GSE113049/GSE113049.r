@@ -7,10 +7,10 @@ library(digest)
 
 mat_Lung <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE113nnn/GSE113049/suppl/GSE113049_count_matrix.tsv.gz")
 mat_Lung <- mat_Lung %>%
-  as.data.frame() %>%
-  column_to_rownames('ATI1expt1_AAACGGGAGTGTTTGC') %>%
-  as.matrix() %>%
-  t() 
+  #as.data.frame() %>%
+  column_to_rownames('ATI1expt1_AAACGGGAGTGTTTGC')
+  #as.matrix() %>%
+  #t() 
 mat_Lung[1:5, 1:5]
 
 meta_Lung <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE113nnn/GSE113049/suppl/GSE113049_cell_metadata.tsv.gz")
