@@ -18,6 +18,12 @@ meta_humanMelanomaDC <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE137nn
 sum(colnames(mat_humanMelanomaDC) %in% meta_humanMelanomaDC$cell_ID)
 ncol(mat_humanMelanomaDC)
 
+#Reference matrix build
+new_ref_matrix <- average_clusters(mat = mat_humanMelanomaDC, metadata = meta_humanMelanomaDC$major_cell_lineage, if_log = TRUE) #Using clustifyr seurat_ref function
+head(new_ref_matrix)
+tail(new_ref_matrix)
+saveRDS(new_ref_matrix, "GSE137710HumanMelanoma.rds")
+
 #Preprocessing workflow
 melanoma <- CreateSeuratObject(counts = mat_humanMelanomaDC, project = "Melanoma", min.cells = 3, min.features = 200) 
 melanoma
@@ -101,3 +107,4 @@ head(Idents(melanoma), 5)
 new_ref_matrix <- average_clusters(mat = mat_humanMelanomaDC, metadata = melanoma@meta.data$annotated, if_log = TRUE) #Using clustifyr seurat_ref function
 head(new_ref_matrix)
 tail(new_ref_matrix)
+saveRDS(new_ref_matrix, "GSE137710HumanMelanoma.rds")

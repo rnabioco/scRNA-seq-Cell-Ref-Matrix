@@ -6,10 +6,10 @@ library(tidyverse)
 
 D7_FACSatlas <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D7_FACSatlas_normalizeddata.txt.gz")
 D7_FACSatlas <- D7_FACSatlas %>%
-  as.data.frame() %>%
-  column_to_rownames('X1') %>%
-  as.matrix() %>%
-  t()
+  #as.data.frame() %>%
+  column_to_rownames('X1')
+  #as.matrix() %>%
+  #t()
 D7_FACSatlas[1:5, 1:5]
 
 D7_FACSatlasMetadata <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D7_FACSatlas_metadata.txt.gz")

@@ -7,10 +7,10 @@ library(digest)
 
 D0_FACSatlas <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D0_FACSatlas_normalizeddata.txt.gz")
 D0_FACSatlas <- D0_FACSatlas %>%
-  as.data.frame() %>%
-  column_to_rownames('X1') %>%
-  as.matrix() %>%
-  t()
+  #as.data.frame() %>%
+  column_to_rownames('X1')
+  #as.matrix() %>%
+  #t()
 D0_FACSatlas[1:5, 1:5]
 
 D0_FACSatlasMetadata <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE143nnn/GSE143435/suppl/GSE143435_DeMicheli_D0_FACSatlas_metadata.txt.gz")
@@ -18,6 +18,19 @@ D0_FACSatlasMetadata
 sum(colnames(D0_FACSatlas) %in% D0_FACSatlasMetadata$X1)
 ncol(D0_FACSatlas)
 
+#Reference matrix build
+new_ref_matrix <- average_clusters(mat = D0_FACSatlas, metadata = D0_FACSatlasMetadata$cell_annotation, if_log = TRUE) #Using clustifyr seurat_ref function
+new_ref_matrix_hashed <- average_clusters(mat = D0_FACSatlas, metadata = D0_FACSatlasMetadata$cell_annotation, if_log = TRUE)
+head(new_ref_matrix)
+tail(new_ref_matrix)
+newcols <- sapply(colnames(new_ref_matrix_hashed), digest, algo = "sha1")
+colnames(new_ref_matrix_hashed) <- newcols
+head(new_ref_matrix_hashed)
+tail(new_ref_matrix_hashed)
+saveRDS(new_ref_matrix_hashed, "GSE143435D0Hashed.rds")
+saveRDS(new_ref_matrix, "GSE143435D0.rds")
+
+#Seurat analysis
 #Preprocessing workflow
 D0_FACS <- CreateSeuratObject(counts = D0_FACSatlas %>% t(), project = "MouseAtlas", min.cells = 3, min.features = 200)
 D0_FACS

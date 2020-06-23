@@ -7,10 +7,10 @@ library(digest)
 
 mat_LiverEndothelial <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129933/suppl/GSE129933_count_matrix.tsv.gz")
 mat_LiverEndothelial <- mat_LiverEndothelial %>%
-  as.data.frame() %>%
-  column_to_rownames('gene') %>%
-  as.matrix() %>%
-  t()
+ # as.data.frame() %>%
+  column_to_rownames('gene')
+#  as.matrix() %>%
+#  t()
 mat_LiverEndothelial[1:5, 1:5]
 
 meta_LiverEndothelial <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129933/suppl/GSE129933_cell_metadata.tsv.gz")
