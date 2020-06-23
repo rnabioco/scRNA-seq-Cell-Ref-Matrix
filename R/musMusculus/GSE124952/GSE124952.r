@@ -12,10 +12,10 @@ mat_PFC <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124952/s
   #In read.table(file = file, header = header, sep = sep, quote = quote,  :
 #                  line 1 appears to contain embedded nulls
 mat_PFC <- mat_PFC %>%
-  as.data.frame() %>%
-  column_to_rownames('X1') %>%
-  as.matrix() %>%
-  t() 
+  #as.data.frame() %>%
+  column_to_rownames('X1')
+  #as.matrix() %>%
+  #t() 
 mat_PFC[1:5, 1:5]
 
 meta_PFC <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124952/suppl/GSE124952_meta_data.csv.gz")
