@@ -26,9 +26,12 @@ GSE137710Spleen <- as.data.frame(GSE137710Spleen)
 rm(GSE129933Matrix)
 rm(GSE147405Matrix)
 
-common <- intersect(GSE129933$Fibroblasts, GSE137710Spleen$cDC1)  
+common <- Reduce(intersect, list(rownames(GSE129933), rownames(GSE137710Melanoma), rownames(GSE137710Spleen), rownames(GSE147405)))
 GSE129933[common,] # give you common rows in data frame 1  
 GSE137710Spleen[common,] # give you common rows in data frame 2
+GSE137710Melanoma[common,]
+GSE147405[common,]
+head(common)
 
-merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "key", all = T)
+merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "rownames", all = T)
 full_join()
