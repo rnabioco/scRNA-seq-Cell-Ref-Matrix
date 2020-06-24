@@ -48,5 +48,5 @@ GSE147405 <- GSE147405[common, ]
 GSE147405 <- as.data.frame(GSE147405)
 
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
-merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "rownames", all = T)
-full_join()
+#merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "rownames", all = T)
+#full_join()
