@@ -52,3 +52,4 @@ GSE143435_D5 <- as.data.frame(GSE143435_D5)
 GSE143435_D7 <- as.data.frame(GSE143435_D7)
 
 mouseAtlas <- bind_rows(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7, .id = NULL)
+saveRDS(mouseAtlas, "MouseAtlas.rds")
