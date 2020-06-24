@@ -4,7 +4,6 @@ library(patchwork)
 library(clustifyr)
 library(tidyverse)
 library(digest)
-library(canceR)
 
 GSE129933Filename <- file.choose()
 GSE129933Matrix <- readRDS(GSE129933Filename)
@@ -25,6 +24,10 @@ GSE137710Spleen <- as.data.frame(GSE137710Spleen)
 
 rm(GSE129933Matrix)
 rm(GSE147405Matrix)
+rm(GSE129933Filename)
+rm(GSE147405Filename)
+rm(GSE137710FilenameMelanoma)
+rm(GSE137710FilenameSpleen)
 
 common <- Reduce(intersect, list(rownames(GSE129933), rownames(GSE137710Melanoma), rownames(GSE137710Spleen), rownames(GSE147405)))
 GSE129933[common,] # give you common rows in data frame 1  
@@ -42,6 +45,7 @@ GSE129933 <- GSE129933[common, ]
 GSE137710Melanoma <- GSE137710Melanoma[common, ]
 GSE137710Spleen <- GSE137710Spleen[common, ]
 GSE147405 <- GSE147405[common, ]
+GSE147405 <- as.data.frame(GSE147405)
 
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "rownames", all = T)
