@@ -33,5 +33,11 @@ GSE137710Melanoma[common,]
 GSE147405[common,]
 head(common)
 
+GSE129933 <- subset(GSE129933, rownames(GSE129933) %in% c(common))
+GSE137710Melanoma <- subset(GSE137710Melanoma, rownames(GSE137710Melanoma) %in% c(common))
+GSE137710Spleen <- subset(GSE137710Spleen, rownames(GSE137710Spleen) %in% c(common))
+GSE147405 <- subset(GSE147405, rownames(GSE147405) %in% c(common))
+
+humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 merge(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, by = "rownames", all = T)
 full_join()
