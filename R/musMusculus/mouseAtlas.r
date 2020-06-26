@@ -62,9 +62,12 @@ appendGenes <- function(mouseGenes, newGSEFile)
   rowCountMouseGenes <- rowCount(mouseGenes)
   rowCountNewGSEFile <- rowCount(newGSEFile)
   
-  for (i in rowCountNewGSEFile)
+  for (i in rowCountMouseGenes)
   {
-    
+    if (rownamesMouseGenes[i] != rownamesNewGSEFile[i])
+    {
+      newGeneName <- c(rownamesNewGSEFile[i])
+    }
   }
 }
 

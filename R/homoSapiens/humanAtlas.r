@@ -50,8 +50,6 @@ GSE137710Spleen <- GSE137710Spleen[common, ]
 GSE147405 <- GSE147405[common, ]
 GSE147405 <- as.data.frame(GSE147405)
 
-
-
 appendGenes <- function(humanGenes, newGSEFile)
 {
   rownamesHumanGenes <- rownames(humanGenes)
@@ -60,9 +58,12 @@ appendGenes <- function(humanGenes, newGSEFile)
   rowCountHumanGenes <- rowCount(humanGenes)
   rowCountNewGSEFile <- rowCount(newGSEFile)
   
-  for (i in rowCountNewGSEFile)
+  for (i in rowCountHumanGenes)
   {
-    
+    if (rownamesHumanGenes[i] != rownamesNewGSEFile[i])
+    {
+      newGeneName <- c(rownamesNewGSEFile[i])
+    }
   }
 }
 
