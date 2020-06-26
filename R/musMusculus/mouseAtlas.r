@@ -26,6 +26,9 @@ GSE143435_D5 <- readRDS(GSE143435D5Filename)
 GSE143435D7Filename <- file.choose()
 GSE143435_D7 <- readRDS(GSE143435D7Filename)
 
+mouseGenesFile <- file.choose()
+mouseGenes <- read_tsv(mouseGenesFile)
+
 rm(GSE113049Filename)
 rm(GSE124952Filename)
 rm(GSE137710Filename)
