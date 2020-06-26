@@ -52,7 +52,19 @@ GSE147405 <- as.data.frame(GSE147405)
 
 
 
-appendGenes <- function(humanGenes, )
+appendGenes <- function(humanGenes, newGSEFile)
+{
+  rownamesHumanGenes <- rownames(humanGenes)
+  rownamesNewGSEFile <- rownames(newGSEFile)
+  
+  rowCountHumanGenes <- rowCount(humanGenes)
+  rowCountNewGSEFile <- rowCount(newGSEFile)
+  
+  for (i in rowCountNewGSEFile)
+  {
+    
+  }
+}
 
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 saveRDS(humanAtlas, "HumanAtlas.rds")
