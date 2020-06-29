@@ -26,6 +26,9 @@ GSE143435_D5 <- readRDS(GSE143435D5Filename)
 GSE143435D7Filename <- file.choose()
 GSE143435_D7 <- readRDS(GSE143435D7Filename)
 
+mouseGenesFile <- file.choose()
+mouseGenes <- read_tsv(mouseGenesFile)
+
 rm(GSE113049Filename)
 rm(GSE124952Filename)
 rm(GSE137710Filename)
@@ -50,6 +53,25 @@ GSE143435_D0 <- as.data.frame(GSE143435_D0)
 GSE143435_D2 <- as.data.frame(GSE143435_D2)
 GSE143435_D5 <- as.data.frame(GSE143435_D5)
 GSE143435_D7 <- as.data.frame(GSE143435_D7)
+
+appendGenes <- function(mouseGenes, newGSEFile)
+{
+  rownamesMouseGenes <- rownames(mouseGenes)
+  rownamesNewGSEFile <- rownames(newGSEFile)
+  
+  rowCountMouseGenes <- rowCount(mouseGenes)
+  rowCountNewGSEFile <- rowCount(newGSEFile)
+  
+  for (i in rowCountMouseGenes)
+  {
+    if (rownamesMouseGenes[i] != rownamesNewGSEFile[i])
+    {
+      newGeneName <- c(rownamesNewGSEFile[i])
+    }
+  }
+}
+
+appendGenes(fullMouseGenes, GSE113049)
 
 mouseAtlas <- bind_rows(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7, .id = NULL)
 saveRDS(mouseAtlas, "MouseAtlas.rds")
