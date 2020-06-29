@@ -57,20 +57,23 @@ GSE143435_D7 <- as.data.frame(GSE143435_D7)
 
 appendGenes <- function(mouseGenes, newGSEFile)
 {
-  rownamesMouseGenes <- rownames(mouseGenes)
   rownamesNewGSEFile <- rownames(newGSEFile)
   
-  rowCountMouseGenes <- rowCount(mouseGenes)
-  rowCountNewGSEFile <- rowCount(newGSEFile)
+  rowCountHumanGenes <- nrow(mouseGenes)
+  rowCountNewGSEFile <- nrow(newGSEFile)
   
-  for (i in rowCountMouseGenes)
+  for (i in rowCountNewGSEFile)
   {
-    if (rownamesMouseGenes[i] != rownamesNewGSEFile[i])
+    searchGene <- rownamesNewGSEFile[i]
+    for (j in rowCountHumanGenes)
     {
-      newGeneNames <- c(rownamesNewGSEFile[i])
+      if (searchGene != mouseGenes[j,1])
+      {
+        newGeneArray <- searchGene
+      }
     }
   }
-  return(newGeneNames)
+  return(newGeneArray)
 }
 
 appendGenes(fullMouseGenes, GSE113049)

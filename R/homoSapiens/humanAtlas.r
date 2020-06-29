@@ -57,17 +57,21 @@ appendGenes <- function(humanGenes, newGSEFile)
 {
   rownamesNewGSEFile <- rownames(newGSEFile)
   
-  rowCountHumanGenes <- nrow(fullHumanGenes)
+  rowCountHumanGenes <- nrow(humanGenes)
   rowCountNewGSEFile <- nrow(newGSEFile)
   
-  for (i in rowCountHumanGenes)
+  for (i in rowCountNewGSEFile)
   {
-    if (fullHumanGenes[1, i] != rownamesNewGSEFile[1, i])
+    searchGene <- rownamesNewGSEFile[i]
+    for (j in rowCountHumanGenes)
     {
-      newGeneNames <- c(rownamesNewGSEFile[i])
+      if (searchGene != humanGenes[j,1])
+      {
+        newGeneArray <- searchGene
+      }
     }
   }
-  return(newGeneNames)
+  return(newGeneArray)
 }
 
 GSE129933NewGeneNames <- appendGenes(humanGenes = fullHumanGenes, newGSEFile = GSE129933)
