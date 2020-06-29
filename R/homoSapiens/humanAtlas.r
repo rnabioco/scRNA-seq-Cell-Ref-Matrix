@@ -60,9 +60,9 @@ appendGenes <- function(humanGenes, newGSEFile)
   rowCountHumanGenes <- nrow(fullHumanGenes)
   rowCountNewGSEFile <- nrow(newGSEFile)
   
-  for (i in rowCountNewGSEFile)
+  for (i in rowCountHumanGenes)
   {
-    if (fullHumanGenes[i] != rownamesNewGSEFile[i])
+    if (fullHumanGenes[1, i] != rownamesNewGSEFile[1, i])
     {
       newGeneNames <- c(rownamesNewGSEFile[i])
     }
