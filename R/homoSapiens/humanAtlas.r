@@ -19,7 +19,9 @@ GSE147405Filename <- file.choose()
 GSE147405Matrix <- readRDS(GSE147405Filename)
 
 humanGenesFile <- file.choose()
-humanGenes <- read_tsv(humanGenesFile)
+humanGenesTSV <- read_tsv(humanGenesFile)
+fullHumanGenes <- as.data.frame(humanGenesTSV)
+rm(humanGenesTSV)
 
 GSE129933 <- as.data.frame(GSE129933Matrix)
 GSE147405 <- as.data.frame(GSE147405Matrix)
@@ -53,21 +55,22 @@ GSE147405 <- as.data.frame(GSE147405)
 
 appendGenes <- function(humanGenes, newGSEFile)
 {
-  rownamesHumanGenes <- rownames(humanGenes)
   rownamesNewGSEFile <- rownames(newGSEFile)
   
-  rowCountHumanGenes <- rowCount(humanGenes)
-  rowCountNewGSEFile <- rowCount(newGSEFile)
+  rowCountHumanGenes <- nrow(fullHumanGenes)
+  rowCountNewGSEFile <- nrow(newGSEFile)
   
-  for (i in rowCountHumanGenes)
+  for (i in rowCountNewGSEFile)
   {
-    if (rownamesHumanGenes[i] != rownamesNewGSEFile[i])
+    if (fullHumanGenes[i] != rownamesNewGSEFile[i])
     {
       newGeneNames <- c(rownamesNewGSEFile[i])
     }
   }
   return(newGeneNames)
 }
+
+GSE129933NewGeneNames <- appendGenes(humanGenes = fullHumanGenes, newGSEFile = GSE129933)
 
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 saveRDS(humanAtlas, "HumanAtlas.rds")
