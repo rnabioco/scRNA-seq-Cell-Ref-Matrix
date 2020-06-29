@@ -62,9 +62,10 @@ appendGenes <- function(humanGenes, newGSEFile)
   {
     if (rownamesHumanGenes[i] != rownamesNewGSEFile[i])
     {
-      newGeneName <- c(rownamesNewGSEFile[i])
+      newGeneNames <- c(rownamesNewGSEFile[i])
     }
   }
+  return(newGeneNames)
 }
 
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)

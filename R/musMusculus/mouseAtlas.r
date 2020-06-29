@@ -27,7 +27,7 @@ GSE143435D7Filename <- file.choose()
 GSE143435_D7 <- readRDS(GSE143435D7Filename)
 
 mouseGenesFile <- file.choose()
-mouseGenes <- read_tsv(mouseGenesFile)
+fullMouseGenes <- read_tsv(mouseGenesFile)
 
 rm(GSE113049Filename)
 rm(GSE124952Filename)
@@ -66,9 +66,10 @@ appendGenes <- function(mouseGenes, newGSEFile)
   {
     if (rownamesMouseGenes[i] != rownamesNewGSEFile[i])
     {
-      newGeneName <- c(rownamesNewGSEFile[i])
+      newGeneNames <- c(rownamesNewGSEFile[i])
     }
   }
+  return(newGeneNames)
 }
 
 appendGenes(fullMouseGenes, GSE113049)
