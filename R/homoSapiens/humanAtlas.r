@@ -82,7 +82,16 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
 }
 
 GSE129933Matrix <- as.matrix(GSE129933)
-GSE129933NewGeneNames <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE129933Matrix)
+GSE129933NewRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE129933Matrix)
 head(GSE129933NewGeneNames)
+
+GSE137710MelanomaMatrix <- as.matrix(GSE137710Melanoma)
+GSE137710NewMelanomaRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710MelanomaMatrix)
+head(GSE137710NewRefMatrix)
+
+GSE137710SpleenMatrix <- as.matrix(GSE137710Spleen)
+GSE137710NewSpleenRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710SpleenMatrix)
+head(GSE137710NewSpleenRefMatrix)
+
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 saveRDS(humanAtlas, "HumanAtlas.rds")
