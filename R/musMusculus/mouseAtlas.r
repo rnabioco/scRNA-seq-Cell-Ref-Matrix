@@ -3,6 +3,7 @@ library(Seurat)
 library(patchwork)
 library(clustifyr)
 library(tidyverse)
+library(readr)
 library(digest)
 
 GSE113049Filename <- file.choose()
@@ -27,7 +28,7 @@ GSE143435D7Filename <- file.choose()
 GSE143435_D7 <- readRDS(GSE143435D7Filename)
 
 mouseGenesFile <- file.choose()
-mouseGenes <- read_tsv(mouseGenesFile)
+fullMouseGenes <- read_tsv(mouseGenesFile)
 
 rm(GSE113049Filename)
 rm(GSE124952Filename)
@@ -56,19 +57,23 @@ GSE143435_D7 <- as.data.frame(GSE143435_D7)
 
 appendGenes <- function(mouseGenes, newGSEFile)
 {
-  rownamesMouseGenes <- rownames(mouseGenes)
   rownamesNewGSEFile <- rownames(newGSEFile)
   
-  rowCountMouseGenes <- rowCount(mouseGenes)
-  rowCountNewGSEFile <- rowCount(newGSEFile)
+  rowCountHumanGenes <- nrow(mouseGenes)
+  rowCountNewGSEFile <- nrow(newGSEFile)
   
-  for (i in rowCountMouseGenes)
+  for (i in rowCountNewGSEFile)
   {
-    if (rownamesMouseGenes[i] != rownamesNewGSEFile[i])
+    searchGene <- rownamesNewGSEFile[i]
+    for (j in rowCountHumanGenes)
     {
-      newGeneName <- c(rownamesNewGSEFile[i])
+      if (searchGene != mouseGenes[j,1])
+      {
+        newGeneArray <- searchGene
+      }
     }
   }
+  return(newGeneArray)
 }
 
 appendGenes(fullMouseGenes, GSE113049)
