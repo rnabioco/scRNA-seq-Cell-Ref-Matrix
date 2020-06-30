@@ -55,28 +55,34 @@ GSE143435_D2 <- as.data.frame(GSE143435_D2)
 GSE143435_D5 <- as.data.frame(GSE143435_D5)
 GSE143435_D7 <- as.data.frame(GSE143435_D7)
 
-appendGenes <- function(mouseGenes, newGSEFile)
+appendGenes <- function(mouseGenesVector, GSEMatrix)
 {
-  rownamesNewGSEFile <- rownames(newGSEFile)
+  rownamesGSEMatrix <- rownames(GSEMatrix) #Get rownames from GSEMatrix (new GSE file)
   
-  rowCountHumanGenes <- nrow(mouseGenes)
-  rowCountNewGSEFile <- nrow(newGSEFile)
+  rowCountHumanGenes <- nrow(mouseGenesVector) #Calculate number of rows from list of full human genes
+  rowCountNewGSEFile <- nrow(GSEMatrix) #Calculate number of rows of GSE matrix
   
-  for (i in rowCountNewGSEFile)
-  {
-    searchGene <- rownamesNewGSEFile[i]
-    for (j in rowCountHumanGenes)
-    {
-      if (searchGene != mouseGenes[j,1])
-      {
-        newGeneArray <- searchGene
-      }
-    }
-  }
-  return(newGeneArray)
+  missing_rows <- setdiff(mouseGenesVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
+  missing_rows #Display missing rows
+  
+  zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSEMatrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
+  zeroExpressionMatrix[1:3, 1:3] #Check first three entries of zeroExpressionMatrix
+  dim(zeroExpressionMatrix) #Check dimensions of matrix
+  
+  rownames(zeroExpressionMatrix) <- missing_rows #Assign row names
+  colnames(zeroExpressionMatrix) <- colnames(GSEMatrix) #Assign column names
+  zeroExpressionMatrix[1:3, 1:3] #Check col and row names assigned correctly
+  
+  fullMatrix <- rbind(GSEMatrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
+  dim(fullMatrix) #Check dimensions of fullMatrix
+  
+  #Reorder matrix
+  fullMatrix <- fullMatrix[mouseGenesVector, ] #Reorder fullMatrix to preserve gene order
+  fullMatrix[1:10, 1:3] #Check reordering
+  return(fullMatrix) #Return fullMatrix
 }
 
-appendGenes(fullMouseGenes, GSE113049)
+GSE113049NewRefMatrix <- appendGenes(fullMouseGenes, GSE113049)
 
 mouseAtlas <- bind_rows(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7, .id = NULL)
 saveRDS(mouseAtlas, "MouseAtlas.rds")
