@@ -22,6 +22,7 @@ humanGenesFile <- file.choose()
 humanGenesTSV <- read_tsv(humanGenesFile)
 fullHumanGenes <- as.data.frame(humanGenesTSV)
 rm(humanGenesTSV)
+humanGenesVector <- as.vector(fullHumanGenes[,1])
 
 GSE129933 <- as.data.frame(GSE129933Matrix)
 GSE147405 <- as.data.frame(GSE147405Matrix)
@@ -55,15 +56,15 @@ GSE147405 <- as.data.frame(GSE147405)
 
 appendGenes <- function(humanGenesVector, GSEMatrix)
 {
-  rownamesGSEMatrix <- rownames(GSEMartix) #Get rownames from GSEMatrix (new GSE file)
+  rownamesGSEMatrix <- rownames(GSEMatrix) #Get rownames from GSEMatrix (new GSE file)
   
   rowCountHumanGenes <- nrow(humanGenesVector) #Calculate number of rows from list of full human genes
   rowCountNewGSEFile <- nrow(GSEMatrix) #Calculate number of rows of GSE matrix
   
-  missing_rows <- setdiff(fullHumanGenes[1, ], rownamesNewGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
+  missing_rows <- setdiff(humanGenesVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
   missing_rows #Display missing rows
   
-  zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol()) #Create a placeholder matrix with zeroes and missing_rows length as row length
+  zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSEMatrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
   zeroExpressionMatrix[1:3, 1:3] #Check first three entries of zeroExpressionMatrix
   dim(zeroExpressionMatrix) #Check dimensions of matrix
   
@@ -74,11 +75,14 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
   fullMatrix <- rbind(GSEMatrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
   dim(fullMatrix) #Check dimensions of fullMatrix
   
-  fullMatrix <- fullMatrix[]
-  
+  #Reorder matrix
+  fullMatrix <- fullMatrix[humanGenesVector, ] #Reorder fullMatrix to preserve gene order
+  fullMatrix[1:10, 1:3] #Check reordering
+  return(fullMatrix) #Return fullMatrix
 }
 
-GSE129933NewGeneNames <- appendGenes(humanGenes = fullHumanGenes, newGSEFile = GSE129933)
-
+GSE129933Matrix <- as.matrix(GSE129933)
+GSE129933NewGeneNames <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE129933Matrix)
+head(GSE129933NewGeneNames)
 humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
 saveRDS(humanAtlas, "HumanAtlas.rds")
