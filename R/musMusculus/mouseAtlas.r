@@ -28,7 +28,10 @@ GSE143435D7Filename <- file.choose()
 GSE143435_D7 <- readRDS(GSE143435D7Filename)
 
 mouseGenesFile <- file.choose()
-fullMouseGenes <- read_tsv(mouseGenesFile)
+mouseTSV <- read_tsv(mouseGenesFile)
+fullMouseGenes <- as.data.frame(mouseTSV)
+rm(mouseTSV)
+mouseGenesVector <- as.vector(fullMouseGenes[,1])
 
 rm(GSE113049Filename)
 rm(GSE124952Filename)
@@ -82,7 +85,33 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-GSE113049NewRefMatrix <- appendGenes(fullMouseGenes, GSE113049)
+GSE113049Matrix <- as.matrix(GSE113049)
+GSE113049NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE113049Matrix)
+head(GSE113049NewRefMatrix)
 
-mouseAtlas <- bind_rows(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7, .id = NULL)
+GSE124952Matrix <- as.matrix(GSE124952)
+GSE124952NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE124952Matrix)
+head(GSE124952NewRefMatrix)
+
+GSE137710Matrix <- as.matrix(GSE137710)
+GSE137710NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE137710Matrix)
+head(GSE137710NewRefMatrix)
+
+GSE143435_D0Matrix <- as.matrix(GSE143435_D0)
+GSE143435_D0NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D0Matrix)
+head(GSE143435_D0NewRefMatrix)
+
+GSE143435_D2Matrix <- as.matrix(GSE143435_D2)
+GSE143435_D2NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D2Matrix)
+head(GSE143435_D2NewRefMatrix)
+
+GSE143435_D5Matrix <- as.matrix(GSE143435_D5)
+GSE143435_D5NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D5Matrix)
+head(GSE143435_D5NewRefMatrix)
+
+GSE143435_D7Matrix <- as.matrix(GSE143435_D7)
+GSE143435_D7NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D7Matrix)
+head(GSE143435_D7NewRefMatrix)
+
+mouseAtlas <- cbind(GSE113049NewRefMatrix, GSE124952NewRefMatrix, GSE137710NewRefMatrix, GSE143435_D0NewRefMatrix, GSE143435_D2NewRefMatrix, GSE143435_D5NewRefMatrix, GSE143435_D7NewRefMatrix, .id = NULL)
 saveRDS(mouseAtlas, "MouseAtlas.rds")
