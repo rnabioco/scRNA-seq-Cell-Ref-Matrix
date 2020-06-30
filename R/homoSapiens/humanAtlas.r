@@ -35,6 +35,7 @@ rm(GSE129933Filename)
 rm(GSE147405Filename)
 rm(GSE137710FilenameMelanoma)
 rm(GSE137710FilenameSpleen)
+rm(humanGenesFile)
 
 common <- Reduce(intersect, list(rownames(GSE129933), rownames(GSE137710Melanoma), rownames(GSE137710Spleen), rownames(GSE147405)))
 GSE129933[common,] # give you common rows in data frame 1  
@@ -83,11 +84,11 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
 
 GSE129933Matrix <- as.matrix(GSE129933)
 GSE129933NewRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE129933Matrix)
-head(GSE129933NewGeneNames)
+head(GSE129933NewRefMatrix)
 
 GSE137710MelanomaMatrix <- as.matrix(GSE137710Melanoma)
 GSE137710NewMelanomaRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710MelanomaMatrix)
-head(GSE137710NewRefMatrix)
+head(GSE137710NewMelanomaRefMatrix)
 
 GSE137710SpleenMatrix <- as.matrix(GSE137710Spleen)
 GSE137710NewSpleenRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710SpleenMatrix)
@@ -97,5 +98,5 @@ GSE147405Matrix <- as.matrix(GSE147405)
 GSE147405NewRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE147405Matrix)
 head(GSE147405NewRefMatrix)
 
-humanAtlas <- bind_rows(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405, .id = NULL)
+humanAtlas <- cbind(GSE129933NewRefMatrix, GSE137710NewMelanomaRefMatrix, GSE137710NewSpleenRefMatrix, GSE147405NewRefMatrix, .id = NULL)
 saveRDS(humanAtlas, "HumanAtlas.rds")
