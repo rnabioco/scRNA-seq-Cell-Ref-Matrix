@@ -5,17 +5,13 @@ library(tidyverse)
 library(readr)
 library(digest)
 
-GSE129933Filename <- file.choose()
-GSE129933Matrix <- readRDS(GSE129933Filename)
+GSE129933Matrix <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/homoSapiens/GSE129933/GSE129933.rds"))
 
-GSE137710FilenameMelanoma <- file.choose()
-GSE137710Melanoma <- readRDS(GSE137710FilenameMelanoma)
+GSE137710Melanoma <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/homoSapiens/GSE137710HumanCopy/GSE137710HumanMelanoma.rds"))
 
-GSE137710FilenameSpleen <- file.choose()
-GSE137710Spleen <- readRDS(GSE137710FilenameSpleen)
+GSE137710Spleen <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/homoSapiens/GSE137710HumanCopy/humanSpleenRefMatrix.rds"))
 
-GSE147405Filename <- file.choose()
-GSE147405Matrix <- readRDS(GSE147405Filename)
+GSE147405Matrix <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/homoSapiens/GSE147405/GSE147405.rds"))
 
 humanGenesFile <- file.choose()
 humanGenesTSV <- read_tsv(humanGenesFile)
