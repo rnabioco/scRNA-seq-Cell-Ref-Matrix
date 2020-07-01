@@ -19,19 +19,11 @@ GSE143435_D5 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/mu
 
 GSE143435_D7 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE143435/GSE143435D7.rds"))
 
-mouseGenesFile <- file.choose()
-mouseTSV <- read_tsv(mouseGenesFile)
+
+mouseTSV <- read_tsv(file.path("~/Reference-Matrix-Generation/data/geneList/mouse_genes.tsv.gz"))
 fullMouseGenes <- as.data.frame(mouseTSV)
 rm(mouseTSV)
 mouseGenesVector <- as.vector(fullMouseGenes[,1])
-
-rm(GSE113049Filename)
-rm(GSE124952Filename)
-rm(GSE137710Filename)
-rm(GSE143435D0Filename)
-rm(GSE143435D2Filename)
-rm(GSE143435D5Filename)
-rm(GSE143435D7Filename)
 
 appendGenes <- function(mouseGenesVector, GSEMatrix)
 {
@@ -60,37 +52,17 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-GSE113049Matrix <- as.matrix(GSE113049)
-GSE113049NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE113049Matrix)
-head(GSE113049NewRefMatrix)
+ref_mats <- list(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
-GSE124952Matrix <- as.matrix(GSE124952)
-GSE124952NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE124952Matrix)
-head(GSE124952NewRefMatrix)
+# iterate over list and get new matrices
+new_mats <- lapply(ref_mats, function(x){
+  as.matrix(x) %>% appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = .)
+})
 
-GSE137710Matrix <- as.matrix(GSE137710)
-GSE137710NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE137710Matrix)
-head(GSE137710NewRefMatrix)
+# cbind a list of matrices
+mouseAtlas <- do.call(cbind, new_mats)
 
-GSE143435_D0Matrix <- as.matrix(GSE143435_D0)
-GSE143435_D0NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D0Matrix)
-head(GSE143435_D0NewRefMatrix)
-
-GSE143435_D2Matrix <- as.matrix(GSE143435_D2)
-GSE143435_D2NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D2Matrix)
-head(GSE143435_D2NewRefMatrix)
-
-GSE143435_D5Matrix <- as.matrix(GSE143435_D5)
-GSE143435_D5NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D5Matrix)
-head(GSE143435_D5NewRefMatrix)
-
-GSE143435_D7Matrix <- as.matrix(GSE143435_D7)
-GSE143435_D7NewRefMatrix <- appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = GSE143435_D7Matrix)
-head(GSE143435_D7NewRefMatrix)
-
-mouseAtlas <- cbind(GSE113049NewRefMatrix, GSE124952NewRefMatrix, GSE137710NewRefMatrix, GSE143435_D0NewRefMatrix, GSE143435_D2NewRefMatrix, GSE143435_D5NewRefMatrix, GSE143435_D7NewRefMatrix, .id = NULL)
-saveRDS(mouseAtlas, "MouseAtlas.rds")
-
+#Rename cols
 colnames(mouseAtlas) <- c("Basal (GSE113049)", 
                           "Ciliated = Ciliated (GSE113049)", 
                           "Club = Club (GSE113049)", 
@@ -148,4 +120,6 @@ colnames(mouseAtlas) <- c("Basal (GSE113049)",
                           "MuSCs and progenitors (GSE143435_D7)",
                           "NK/T cells (GSE143435_D7)",
                           "Tenocytes (GSE143435_D7)"
-                          )
+)
+
+saveRDS(mouseAtlas, "MouseAtlas.rds")
