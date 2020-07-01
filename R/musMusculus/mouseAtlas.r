@@ -1,6 +1,5 @@
 library(dplyr)
 library(Seurat)
-library(patchwork)
 library(clustifyr)
 library(tidyverse)
 library(readr)
@@ -40,23 +39,6 @@ rm(GSE143435D0Filename)
 rm(GSE143435D2Filename)
 rm(GSE143435D5Filename)
 rm(GSE143435D7Filename)
-
-common <- Reduce(intersect, list(rownames(GSE113049), rownames(GSE124952), rownames(GSE137710), rownames(GSE143435_D0), rownames(GSE143435_D2), rownames(GSE143435_D5), rownames(GSE143435_D7)))
-GSE113049 <- GSE113049[common,]
-GSE124952 <- GSE124952[common,]
-GSE137710 <- GSE137710[common,]
-GSE143435_D0 <- GSE143435_D0[common,]
-GSE143435_D2 <- GSE143435_D2[common,]
-GSE143435_D5 <- GSE143435_D5[common,]
-GSE143435_D7 <- GSE143435_D7[common,]
-
-GSE113049 <- as.data.frame(GSE113049)
-GSE124952 <- as.data.frame(GSE124952)
-GSE137710 <- as.data.frame(GSE137710)
-GSE143435_D0 <- as.data.frame(GSE143435_D0)
-GSE143435_D2 <- as.data.frame(GSE143435_D2)
-GSE143435_D5 <- as.data.frame(GSE143435_D5)
-GSE143435_D7 <- as.data.frame(GSE143435_D7)
 
 appendGenes <- function(mouseGenesVector, GSEMatrix)
 {
