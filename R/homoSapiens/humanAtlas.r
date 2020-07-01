@@ -63,23 +63,15 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-GSE129933Matrix <- as.matrix(GSE129933)
-GSE129933NewRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE129933Matrix)
-head(GSE129933NewRefMatrix)
+ref_mats <- list(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405)
+new_mats <- lapply(ref_mats, function(x)
+  {
+  as.matrix(x) %>% appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = .)
+  }
+)
 
-GSE137710MelanomaMatrix <- as.matrix(GSE137710Melanoma)
-GSE137710NewMelanomaRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710MelanomaMatrix)
-head(GSE137710NewMelanomaRefMatrix)
-
-GSE137710SpleenMatrix <- as.matrix(GSE137710Spleen)
-GSE137710NewSpleenRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE137710SpleenMatrix)
-head(GSE137710NewSpleenRefMatrix)
-
-GSE147405Matrix <- as.matrix(GSE147405)
-GSE147405NewRefMatrix <- appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = GSE147405Matrix)
-head(GSE147405NewRefMatrix)
-
-humanAtlas <- cbind(GSE129933NewRefMatrix, GSE137710NewMelanomaRefMatrix, GSE137710NewSpleenRefMatrix, GSE147405NewRefMatrix, .id = NULL)
+# cbind a list of matrices
+humanAtlas <- do.call(cbind, new_mats)
 
 colnames(humanAtlas) <- c("Erythrocytes (GSE129933)",
                           "Fibroblasts (GSE129933)",
