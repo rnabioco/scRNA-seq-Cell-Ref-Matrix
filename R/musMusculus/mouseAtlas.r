@@ -5,26 +5,19 @@ library(tidyverse)
 library(readr)
 library(digest)
 
-GSE113049Filename <- file.choose()
-GSE113049 <- readRDS(GSE113049Filename)
+GSE113049 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE113049/GSE113049.rds"))
 
-GSE124952Filename <- file.choose()
-GSE124952 <- readRDS(GSE124952Filename)
+GSE124952 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE124952/GSE124952.rds"))
 
-GSE137710Filename <- file.choose()
-GSE137710 <- readRDS(GSE137710Filename)
+GSE137710 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE137710MouseCopy/GSE137710MouseSpleen.rds"))
 
-GSE143435D0Filename <- file.choose()
-GSE143435_D0 <- readRDS(GSE143435D0Filename)
+GSE143435_D0 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE143435/GSE143435D0.rds"))
 
-GSE143435D2Filename <- file.choose()
-GSE143435_D2 <- readRDS(GSE143435D2Filename)
+GSE143435_D2 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE143435/GSE143435D2.rds"))
 
-GSE143435D5Filename <- file.choose()
-GSE143435_D5 <- readRDS(GSE143435D5Filename)
+GSE143435_D5 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE143435/GSE143435D5.rds"))
 
-GSE143435D7Filename <- file.choose()
-GSE143435_D7 <- readRDS(GSE143435D7Filename)
+GSE143435_D7 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE143435/GSE143435D7.rds"))
 
 mouseGenesFile <- file.choose()
 mouseTSV <- read_tsv(mouseGenesFile)
