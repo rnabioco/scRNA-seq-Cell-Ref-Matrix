@@ -1,6 +1,5 @@
 library(dplyr)
 library(Seurat)
-library(patchwork)
 library(clustifyr)
 library(tidyverse)
 library(readr)
