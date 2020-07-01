@@ -13,8 +13,7 @@ GSE137710Spleen <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices
 
 GSE147405Matrix <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/homoSapiens/GSE147405/GSE147405.rds"))
 
-humanGenesFile <- file.choose()
-humanGenesTSV <- read_tsv(humanGenesFile)
+humanGenesTSV <- read_tsv(file.path("~/Reference-Matrix-Generation/data/geneList/human_genes.tsv.gz"))
 fullHumanGenes <- as.data.frame(humanGenesTSV)
 rm(humanGenesTSV)
 humanGenesVector <- as.vector(fullHumanGenes[,1])
