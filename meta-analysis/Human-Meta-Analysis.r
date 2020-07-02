@@ -8,8 +8,12 @@ humanAtlas <- readRDS(file.path("~/Reference-Matrix-Generation/atlas/homoSapiens
 
 humanMetaAnalysis <- CreateSeuratObject(counts = humanAtlas, project = "Human-Meta-Analysis", min.cells = 3, min.features = 200)
 humanMetaAnalysis
-#rm(humanAtlas)
 gc()
+
+#Normalize Data
+humanMetaAnalysis <- NormalizeData(humanMetaAnalysis, normalization.method = "LogNormalize", scale.factor = 10000)
+
+#Preprocessing workflow
 humanMetaAnalysis@assays$RNA@data <- humanMetaAnalysis@assays$RNA@counts
 humanMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(humanMetaAnalysis, pattern = "^MT")
 head(humanMetaAnalysis@meta.data, 5)
@@ -18,9 +22,6 @@ plot1 <- FeatureScatter(humanMetaAnalysis, feature1 = "nCount_RNA", feature2 = "
 plot2 <- FeatureScatter(humanMetaAnalysis, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
 humanMetaAnalysis <- subset(humanMetaAnalysis, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
-
-#Normalize Data
-humanMetaAnalysis <- NormalizeData(humanMetaAnalysis, normalization.method = "LogNormalize", scale.factor = 10000)
 
 #Find Variable Features for PCA
 humanMetaAnalysis <- FindVariableFeatures(humanMetaAnalysis, selection.method = "vst", nfeatures = 2000)
