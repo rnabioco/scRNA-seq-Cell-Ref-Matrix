@@ -19,6 +19,8 @@ plot2 <- FeatureScatter(humanMetaAnalysis, feature1 = "nCount_RNA", feature2 = "
 plot1 + plot2
 humanMetaAnalysis <- subset(humanMetaAnalysis, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 
+humanMetaAnalysis <- NormalizeData(humanMetaAnalysis, normalization.method = "LogNormalize", scale.factor = 10000)
+
 humanMetaAnalysis <- FindVariableFeatures(humanMetaAnalysis, selection.method = "vst", nfeatures = 2000)
 top10 <- head(VariableFeatures(humanMetaAnalysis), 10)
 plot1 <- VariableFeaturePlot(humanMetaAnalysis)
@@ -34,3 +36,15 @@ VizDimLoadings(humanMetaAnalysis, dims = 1:2, reduction = "pca")
 DimPlot(humanMetaAnalysis, reduction = "pca")
 DimHeatMap(humanMetaAnalysis, dims = 1, cells = 500, balanced = TRUE)
 DimHeatMap(humanMetaAnalysis, dims = 1:15, cells = 500, balanced = TRUE)
+
+#Dimensionality
+ElbowPlot(humanMetaAnalysis)
+
+#Cluster cells
+humanMetaAnalysis <- FindNeighbors(humanMetaAnalysis, dims = 1:10)
+humanMetaAnalysis <- FindClusters(humanMetaAnalysis, resolution = 0.5)
+head(Idents(humanMetaAnalysis), 5)
+
+#Non-linear dimensional reduction (UMAP/tSNE)
+humanMetaAnalysis <- RunUMAP(humanMetaAnalysis, dims = 1:10)
+DimPlot(humanMetaAnalysis, reduction = "umap")
