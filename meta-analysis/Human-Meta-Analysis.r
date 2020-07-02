@@ -26,3 +26,11 @@ plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 plot1 + plot2
 
 #Linear dimension reduction
+all.genes <- rownames(humanMetaAnalysis)
+humanMetaAnalysis <- ScaleData(humanMetaAnalysis, features = all.genes)
+humanMetaAnalysis <- RunPCA(humanMetaAnalysis, features = VariableFeatures(object = humanMetaAnalysis))
+print(humanMetaAnalysis[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(humanMetaAnalysis, dims = 1:2, reduction = "pca")
+DimPlot(humanMetaAnalysis, reduction = "pca")
+DimHeatMap(humanMetaAnalysis, dims = 1, cells = 500, balanced = TRUE)
+DimHeatMap(humanMetaAnalysis, dims = 1:15, cells = 500, balanced = TRUE)
