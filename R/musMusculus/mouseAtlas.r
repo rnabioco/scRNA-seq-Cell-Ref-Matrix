@@ -52,7 +52,7 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-ref_mats <- list(GSE113049, GSE124952, GSE137710, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
+ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
 # iterate over list and get new matrices
 new_mats <- lapply(ref_mats, function(x){
@@ -64,9 +64,9 @@ mouseAtlas <- do.call(cbind, new_mats)
 
 #Rename cols
 colnames(mouseAtlas) <- c("Basal (GSE113049)", 
-                          "Ciliated = Ciliated (GSE113049)", 
-                          "Club = Club (GSE113049)", 
-                          "Endothelial/Fibroblast = Endothelial/Fibroblast (GSE113049)", 
+                          "Ciliated (GSE113049)", 
+                          "Club (GSE113049)", 
+                          "Endothelial/Fibroblast (GSE113049)", 
                           "Injured AEC2: Cell Cycle Arrest (GSE113049)", 
                           "Injured AEC2: Proliferating (GSE113049)", 
                           "Injured AEC2: Transdifferentiating (GSE113049)", 
@@ -74,21 +74,21 @@ colnames(mouseAtlas) <- c("Basal (GSE113049)",
                           "Naive AEC1 (GSE113049)", 
                           "Naive AEC2 (GSE113049)", 
                           "Other Injured AEC2 (GSE113049)", 
-                          "Astro = Astro (GSE124952)", 
-                          "Endo = Endothelial (GSE124952)", 
-                          "Excitatory = Excitatory (GSE124952)",
-                          "Inhibitory = Inhibitory (GSE124952)",
-                          "Microglia = Microglia (GSE124952)",
+                          "Astro (GSE124952)", 
+                          "Endothelial (GSE124952)", 
+                          "Excitatory (GSE124952)",
+                          "Inhibitory (GSE124952)",
+                          "Microglia (GSE124952)",
                           "NF Oligo (GSE124952)",
                           "Oligo (GSE124952)",
                           "OPC (GSE124952)",
-                          "CCR7hiDC (GSE137710)",
-                          "cDC1 (GSE137710)",
-                          "cDC2 Mixed (GSE137710)",
-                          "cDC Tbet- (GSE137710)",
-                          "cDC Tbet+ (GSE137710)",
-                          "Monocyte (GSE137710)", 
-                          "Singlec - H DC (GSE137710)", 
+                          #"CCR7hiDC (GSE137710)",
+                          #"cDC1 (GSE137710)",
+                          #"cDC2 Mixed (GSE137710)",
+                          #"cDC Tbet- (GSE137710)",
+                          #"cDC Tbet+ (GSE137710)",
+                          #"Monocyte (GSE137710)", 
+                          #"Singlec - H DC (GSE137710)", 
                           "Endothelial (GSE143435_D0)",
                           "FAPs (GSE143435_D0)",
                           "Immune (GSE143435_D0)",
