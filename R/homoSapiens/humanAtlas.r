@@ -58,7 +58,7 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-ref_mats <- list(GSE129933, GSE137710Melanoma, GSE137710Spleen, GSE147405)
+ref_mats <- list(GSE129933, GSE147405)
 new_mats <- lapply(ref_mats, function(x)
   {
   as.matrix(x) %>% appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = .)
@@ -75,17 +75,17 @@ colnames(humanAtlas) <- c("Erythrocytes (GSE129933)",
                           "Lymphocytes (GSE129933)",
                           "Monocytes (GSE129933)",
                           "PEC (GSE129933)",
-                          "B cells (GSE137710 Melanoma)",
-                          "melanoma (GSE137710 Melanoma)",
-                          "Myeloid (GSE137710 Melanoma)",
-                          "T/NK (GSE137710 Melanoma)",
-                          "AS DC (GSE137710 Spleen)",
-                          "CCR7+ cDC2 (GSE137710 Spleen)",
-                          "cDC1 (GSE137710 Spleen)",
-                          "CLEC10A- cDC2 (GSE137710 Spleen)",
-                          "CLEC10A+ cDC2 (GSE137710 Spleen)",
-                          "Mitotic cDC1 (GSE137710 Spleen)",
-                          "Mitotic cDC2 (GSE137710 Spleen)",
+                          #"B cells (GSE137710 Melanoma)",
+                          #"melanoma (GSE137710 Melanoma)",
+                          #"Myeloid (GSE137710 Melanoma)",
+                          #"T/NK (GSE137710 Melanoma)",
+                          #"AS DC (GSE137710 Spleen)",
+                          #"CCR7+ cDC2 (GSE137710 Spleen)",
+                          #"cDC1 (GSE137710 Spleen)",
+                          #"CLEC10A- cDC2 (GSE137710 Spleen)",
+                          #"CLEC10A+ cDC2 (GSE137710 Spleen)",
+                          #"Mitotic cDC1 (GSE137710 Spleen)",
+                          #"Mitotic cDC2 (GSE137710 Spleen)",
                           "OVCA420 (GSE147405)"
                           )
 saveRDS(humanAtlas, "HumanAtlas.rds")
