@@ -52,6 +52,19 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
+checkRawCounts <- function(GSEMatrix)
+{
+  maxValue <- max(as.numeric(unlist(GSEMatrix)))
+  if (maxValue < 50)
+  {
+    return("log normalized")
+  }
+  else
+  {
+    
+  }
+}
+
 ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
 # iterate over list and get new matrices
