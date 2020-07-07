@@ -58,6 +58,28 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
+checkRawCounts <- function(GSEMatrix)
+{
+  GSEBigMatrix <- as.big.matrix(GSEMatrix)
+  maxValue <- max(as.numeric(unlist(GSEMatrix)))
+  if (maxValue > 50)
+  {
+    return("log normalized")
+  }
+  else if (is.float(GSEMatrix))
+  {
+    return("normalized")
+  }
+  else if (!is.float(GSEMatrix))
+  {
+    return("raw counts")
+  }
+  else
+  {
+    return("unknown")
+  }
+}
+
 ref_mats <- list(GSE129933, GSE147405)
 new_mats <- lapply(ref_mats, function(x)
   {
