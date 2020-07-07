@@ -3,9 +3,7 @@ library(Seurat)
 library(clustifyr)
 library(tidyverse)
 library(readr)
-library(bigmemory)
 library(digest)
-library(float)
 
 GSE113049 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE113049/GSE113049.rds"))
 
@@ -54,25 +52,30 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-checkRawCounts <- function(GSEMatrix)
+checkRawCounts <- function(GSEMatrix, max_log_value = 50)
 {
-  GSEBigMatrix <- as.big.matrix(GSEMatrix)
-  maxValue <- max(as.numeric(unlist(GSEMatrix)))
-  if (maxValue > 50)
-  {
-    return("log normalized")
-  }
-  else if (is.float(GSEMatrix))
-  {
-    return("normalized")
-  }
-  else if (!is.float(GSEMatrix))
+  if (is.integer(GSEMatrix))
   {
     return("raw counts")
   }
-  else
+  else if (is.double(GSEMatrix))
   {
-    return("unknown")
+    if(max(x) > max_log_val)
+    {
+      return("normalized")
+    } 
+    else if (min(x) < 0) 
+    {
+      stop("negative values detected, likely scaled data")
+    } 
+    else 
+    {
+      return("log-normalized")
+    }
+  }
+  else 
+  {
+    stop("unknown matrix format: ", typeof(x))
   }
 }
 

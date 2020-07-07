@@ -58,25 +58,30 @@ appendGenes <- function(humanGenesVector, GSEMatrix)
   return(fullMatrix) #Return fullMatrix
 }
 
-checkRawCounts <- function(GSEMatrix)
+checkRawCounts <- function(GSEMatrix, max_log_value = 50)
 {
-  GSEBigMatrix <- as.big.matrix(GSEMatrix)
-  maxValue <- max(as.numeric(unlist(GSEMatrix)))
-  if (maxValue > 50)
-  {
-    return("log normalized")
-  }
-  else if (is.float(GSEMatrix))
-  {
-    return("normalized")
-  }
-  else if (!is.float(GSEMatrix))
+  if (is.integer(GSEMatrix))
   {
     return("raw counts")
   }
-  else
+  else if (is.double(GSEMatrix))
   {
-    return("unknown")
+    if(max(x) > max_log_val)
+    {
+      return("normalized")
+    } 
+    else if (min(x) < 0) 
+    {
+      stop("negative values detected, likely scaled data")
+    } 
+    else 
+    {
+      return("log-normalized")
+    }
+  }
+  else 
+  {
+    stop("unknown matrix format: ", typeof(x))
   }
 }
 
