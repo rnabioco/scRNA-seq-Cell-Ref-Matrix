@@ -57,7 +57,7 @@ checkRawCounts <- function(GSEMatrix)
 {
   GSEBigMatrix <- as.big.matrix(GSEMatrix)
   maxValue <- max(as.numeric(unlist(GSEMatrix)))
-  if (maxValue < 50)
+  if (maxValue > 50)
   {
     return("log normalized")
   }
@@ -76,6 +76,7 @@ checkRawCounts <- function(GSEMatrix)
 }
 
 checkRawCounts(GSE113049)
+checkRawCounts(GSE124952)
 
 ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
