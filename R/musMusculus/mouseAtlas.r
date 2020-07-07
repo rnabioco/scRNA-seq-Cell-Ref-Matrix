@@ -5,6 +5,7 @@ library(tidyverse)
 library(readr)
 library(bigmemory)
 library(digest)
+library(float)
 
 GSE113049 <- readRDS(file.path("~/Reference-Matrix-Generation/ref_matrices/musMusculus/GSE113049/GSE113049.rds"))
 
@@ -61,11 +62,11 @@ checkRawCounts <- function(GSEMatrix)
   {
     return("log normalized")
   }
-  else if (is.float(GSEBigMatrix))
+  else if (is.float(GSEMatrix))
   {
     return("normalized")
   }
-  else if (!is.float(GSEBigMatrix))
+  else if (!is.float(GSEMatrix))
   {
     return("raw counts")
   }
