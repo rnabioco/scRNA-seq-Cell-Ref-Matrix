@@ -77,6 +77,10 @@ checkRawCounts <- function(GSEMatrix)
 
 checkRawCounts(GSE113049)
 checkRawCounts(GSE124952)
+checkRawCounts(GSE143435_D0)
+checkRawCounts(GSE143435_D2)
+checkRawCounts(GSE143435_D5)
+checkRawCounts(GSE143435_D7)
 
 ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
