@@ -80,7 +80,11 @@ checkRawCounts <- function(GSEMatrix)
   }
 }
 
+checkRawCounts(GSE129933Matrix)
+checkRawCounts(GSE147405Matrix)
+
 ref_mats <- list(GSE129933, GSE147405)
+
 new_mats <- lapply(ref_mats, function(x)
   {
   as.matrix(x) %>% appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = .)
