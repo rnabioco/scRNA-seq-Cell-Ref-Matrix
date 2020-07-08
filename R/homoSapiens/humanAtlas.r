@@ -33,10 +33,14 @@ rm(humanGenesFile)
 
 source("~/Reference-Matrix-Generation/R/utils/check.r")
 
-checkRawCounts(GSE129933Matrix)
-checkRawCounts(GSE147405Matrix)
+ref_mats <- list(GSE129933Matrix, GSE147405Matrix)
 
-ref_mats <- list(GSE129933, GSE147405)
+is_counts <- lapply(ref_mats, function(x)
+  {
+    checkRawCounts(x) == "raw counts"
+  }
+)
+ref_mats <- ref_mats[unlist(is_counts)]
 
 new_mats <- lapply(ref_mats, function(x)
   {

@@ -27,14 +27,14 @@ mouseGenesVector <- as.vector(fullMouseGenes[,1])
 
 source("~/Reference-Matrix-Generation/R/utils/check.r")
 
-checkRawCounts(GSE113049, 50)
-checkRawCounts(GSE124952)
-checkRawCounts(GSE143435_D0)
-checkRawCounts(GSE143435_D2)
-checkRawCounts(GSE143435_D5)
-checkRawCounts(GSE143435_D7)
-
 ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
+
+is_counts <- lapply(ref_mats, function(x)
+  {
+    checkRawCounts(x) == "raw counts"
+  }
+)
+ref_mats <- ref_mats[unlist(is_counts)]
 
 # iterate over list and get new matrices
 new_mats <- lapply(ref_mats, function(x){
