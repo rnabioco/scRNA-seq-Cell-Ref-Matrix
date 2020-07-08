@@ -79,7 +79,9 @@ checkRawCounts <- function(GSEMatrix, max_log_value = 50)
   }
 }
 
-checkRawCounts(GSE113049)
+checkRawCounts <- source("~/Reference-Matrix-Generation/R/utils/check.r")
+
+checkRawCounts(GSE113049, 50)
 checkRawCounts(GSE124952)
 checkRawCounts(GSE143435_D0)
 checkRawCounts(GSE143435_D2)
