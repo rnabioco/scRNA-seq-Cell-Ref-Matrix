@@ -15,7 +15,7 @@ gc()
 
 #Preprocessing workflow
 mouseMetaAnalysis@assays$RNA@data <- mouseMetaAnalysis@assays$RNA@counts
-mouseMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(mouseMetaAnalysis, pattern = "^MT-")
+mouseMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(mouseMetaAnalysis, pattern = "^mt-")
 head(mouseMetaAnalysis@meta.data, 5)
 VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 plot1 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "percent.mt")
