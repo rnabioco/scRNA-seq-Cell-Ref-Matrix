@@ -18,6 +18,9 @@ D0_FACSatlasMetadata
 sum(colnames(D0_FACSatlas) %in% D0_FACSatlasMetadata$X1)
 ncol(D0_FACSatlas)
 
+source("~/Reference-Matrix-Generation/R/utils/check.r")
+checkRawCounts(as.matrix(D0_FACSatlas))
+
 #Reference matrix build
 new_ref_matrix <- average_clusters(mat = D0_FACSatlas, metadata = D0_FACSatlasMetadata$cell_annotation, if_log = TRUE) #Using clustifyr seurat_ref function
 new_ref_matrix_hashed <- average_clusters(mat = D0_FACSatlas, metadata = D0_FACSatlasMetadata$cell_annotation, if_log = TRUE)

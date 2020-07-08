@@ -17,6 +17,9 @@ meta_KinaseScreen <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/G
 sum(colnames(KinaseScreen) %in% meta_KinaseScreen$CellLine)
 ncol(KinaseScreen)
 
+source("~/Reference-Matrix-Generation/R/utils/check.r")
+checkRawCounts(as.matrix(KinaseScreen))
+
 new_ref_matrix <- average_clusters(mat = KinaseScreen, metadata = meta_KinaseScreen$CellLine, if_log = TRUE)
 new_ref_matrix_hashed <- average_clusters(mat = KinaseScreen, metadata = meta_KinaseScreen$CellLine, if_log = TRUE)
 head(new_ref_matrix)

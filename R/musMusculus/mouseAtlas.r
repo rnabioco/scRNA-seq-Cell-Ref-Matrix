@@ -25,38 +25,20 @@ fullMouseGenes <- as.data.frame(mouseTSV)
 rm(mouseTSV)
 mouseGenesVector <- as.vector(fullMouseGenes[,1])
 
-appendGenes <- function(mouseGenesVector, GSEMatrix)
-{
-  rownamesGSEMatrix <- rownames(GSEMatrix) #Get rownames from GSEMatrix (new GSE file)
-  
-  rowCountHumanGenes <- nrow(mouseGenesVector) #Calculate number of rows from list of full human genes
-  rowCountNewGSEFile <- nrow(GSEMatrix) #Calculate number of rows of GSE matrix
-  
-  missing_rows <- setdiff(mouseGenesVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
-  missing_rows #Display missing rows
-  
-  zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSEMatrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
-  zeroExpressionMatrix[1:3, 1:3] #Check first three entries of zeroExpressionMatrix
-  dim(zeroExpressionMatrix) #Check dimensions of matrix
-  
-  rownames(zeroExpressionMatrix) <- missing_rows #Assign row names
-  colnames(zeroExpressionMatrix) <- colnames(GSEMatrix) #Assign column names
-  zeroExpressionMatrix[1:3, 1:3] #Check col and row names assigned correctly
-  
-  fullMatrix <- rbind(GSEMatrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
-  dim(fullMatrix) #Check dimensions of fullMatrix
-  
-  #Reorder matrix
-  fullMatrix <- fullMatrix[mouseGenesVector, ] #Reorder fullMatrix to preserve gene order
-  fullMatrix[1:10, 1:3] #Check reordering
-  return(fullMatrix) #Return fullMatrix
-}
+source("~/Reference-Matrix-Generation/R/utils/check.r")
 
 ref_mats <- list(GSE113049, GSE124952, GSE143435_D0, GSE143435_D2, GSE143435_D5, GSE143435_D7)
 
+is_counts <- lapply(ref_mats, function(x)
+  {
+    checkRawCounts(x) == "raw counts"
+  }
+)
+ref_mats <- ref_mats[unlist(is_counts)]
+
 # iterate over list and get new matrices
 new_mats <- lapply(ref_mats, function(x){
-  as.matrix(x) %>% appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = .)
+  as.matrix(x) %>% appendGenes(geneVector = mouseGenesVector, GSEMatrix = .)
 })
 
 # cbind a list of matrices

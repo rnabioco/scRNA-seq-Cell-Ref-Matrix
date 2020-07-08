@@ -18,6 +18,9 @@ meta_LiverEndothelial
 sum(colnames(mat_LiverEndothelial) %in% meta_LiverEndothelial$cluster)
 ncol(mat_LiverEndothelial)
 
+source("~/Reference-Matrix-Generation/R/utils/check.r")
+checkRawCounts(as.matrix(mat_LiverEndothelial))
+
 new_ref_matrix <- average_clusters(mat = mat_LiverEndothelial, metadata = meta_LiverEndothelial, if_log = FALSE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_LiverEndothelial, metadata = meta_LiverEndothelial, if_log = FALSE)
 head(new_ref_matrix)
