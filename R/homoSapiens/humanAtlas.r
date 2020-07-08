@@ -44,7 +44,7 @@ ref_mats <- ref_mats[unlist(is_counts)]
 
 new_mats <- lapply(ref_mats, function(x)
   {
-  as.matrix(x) %>% appendGenes(humanGenesVector = humanGenesVector, GSEMatrix = .)
+  as.matrix(x) %>% appendGenes(geneVector = humanGenesVector, GSEMatrix = .)
   }
 )
 

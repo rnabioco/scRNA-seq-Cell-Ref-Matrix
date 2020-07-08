@@ -38,7 +38,7 @@ ref_mats <- ref_mats[unlist(is_counts)]
 
 # iterate over list and get new matrices
 new_mats <- lapply(ref_mats, function(x){
-  as.matrix(x) %>% appendGenes(mouseGenesVector = mouseGenesVector, GSEMatrix = .)
+  as.matrix(x) %>% appendGenes(geneVector = mouseGenesVector, GSEMatrix = .)
 })
 
 # cbind a list of matrices

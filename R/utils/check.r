@@ -1,11 +1,11 @@
-appendGenes <- function(mouseGenesVector, GSEMatrix)
+appendGenes <- function(geneVector, GSEMatrix)
 {
   rownamesGSEMatrix <- rownames(GSEMatrix) #Get rownames from GSEMatrix (new GSE file)
   
-  rowCountHumanGenes <- nrow(mouseGenesVector) #Calculate number of rows from list of full human genes
+  rowCountHumanGenes <- nrow(geneVector) #Calculate number of rows from list of full human genes
   rowCountNewGSEFile <- nrow(GSEMatrix) #Calculate number of rows of GSE matrix
   
-  missing_rows <- setdiff(mouseGenesVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
+  missing_rows <- setdiff(geneVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
   missing_rows #Display missing rows
   
   zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSEMatrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
@@ -20,7 +20,7 @@ appendGenes <- function(mouseGenesVector, GSEMatrix)
   dim(fullMatrix) #Check dimensions of fullMatrix
   
   #Reorder matrix
-  fullMatrix <- fullMatrix[mouseGenesVector, ] #Reorder fullMatrix to preserve gene order
+  fullMatrix <- fullMatrix[geneVector, ] #Reorder fullMatrix to preserve gene order
   fullMatrix[1:10, 1:3] #Check reordering
   return(fullMatrix) #Return fullMatrix
 }
