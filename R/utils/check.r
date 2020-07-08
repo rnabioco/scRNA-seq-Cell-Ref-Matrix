@@ -6,11 +6,11 @@ checkRawCounts <- function(GSEMatrix, max_log_value = 50)
   }
   else if (is.double(GSEMatrix))
   {
-    if(max(x) > max_log_val)
+    if(max(GSEMatrix) > max_log_value)
     {
       return("normalized")
     } 
-    else if (min(x) < 0) 
+    else if (min(GSEMatrix) < 0) 
     {
       stop("negative values detected, likely scaled data")
     } 
@@ -21,6 +21,6 @@ checkRawCounts <- function(GSEMatrix, max_log_value = 50)
   }
   else 
   {
-    stop("unknown matrix format: ", typeof(x))
+    stop("unknown matrix format: ", typeof(GSEMatrix))
   }
 }
