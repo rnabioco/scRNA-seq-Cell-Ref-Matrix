@@ -27,12 +27,20 @@ appendGenes <- function(geneVector, GSEMatrix)
 
 checkRawCounts <- function(GSEMatrix, max_log_value = 50)
 {
+  if(!is.matrix(GSEMatrix))
+  {
+    GSEMatrix <- as.matrix(GSEMatrix)
+  }
   if (is.integer(GSEMatrix))
   {
     return("raw counts")
   }
   else if (is.double(GSEMatrix))
   {
+    if (all(GSEMatrix == floor(GSEMatrix)))
+    {
+      return("raw counts")
+    }
     if(max(GSEMatrix) > max_log_value)
     {
       return("normalized")
