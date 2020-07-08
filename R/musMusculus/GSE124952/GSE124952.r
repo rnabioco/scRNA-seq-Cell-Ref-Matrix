@@ -23,6 +23,9 @@ meta_PFC
 sum(colnames(mat_PFC) %in% meta_PFC$CellType)
 ncol(mat_PFC)
 
+source("~/Reference-Matrix-Generation/R/utils/check.r")
+checkRawCounts(as.matrix(mat_PFC))
+
 new_ref_matrix <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = TRUE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = TRUE)
 head(new_ref_matrix)

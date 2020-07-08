@@ -18,6 +18,9 @@ meta_Lung
 sum(colnames(mat_Lung) %in% meta_Lung$cell_type)
 ncol(mat_Lung)
 
+source("~/Reference-Matrix-Generation/R/utils/check.r")
+checkRawCounts(as.matrix(mat_Lung))
+
 new_ref_matrix <- average_clusters(mat = mat_Lung, metadata = meta_Lung$cell_type, if_log = TRUE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_Lung, metadata = meta_Lung$cell_type, if_log = TRUE)
 head(new_ref_matrix)
