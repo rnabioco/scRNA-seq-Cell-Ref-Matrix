@@ -25,11 +25,6 @@ GSE137710Spleen <- as.data.frame(GSE137710Spleen)
 
 rm(GSE129933Matrix)
 rm(GSE147405Matrix)
-rm(GSE129933Filename)
-rm(GSE147405Filename)
-rm(GSE137710FilenameMelanoma)
-rm(GSE137710FilenameSpleen)
-rm(humanGenesFile)
 
 source("~/Reference-Matrix-Generation/R/utils/check.r")
 
