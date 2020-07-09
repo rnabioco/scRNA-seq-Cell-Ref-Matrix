@@ -6,7 +6,7 @@ library(tidyverse)
 
 mouseAtlas <- readRDS(file.path("~/Reference-Matrix-Generation/atlas/musMusculus/MouseAtlas.rds"))
 
-mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 3, min.features = 200)
+mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 0, min.features = 0)
 mouseMetaAnalysis
 gc()
 
@@ -23,7 +23,7 @@ plot2 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "
 CombinePlots(plots = list(plot1, plot2))
 
 #Find Variable Features for PCA
-mouseMetaAnalysis <- FindVariableFeatures(mouseMetaAnalysis, selection.method = "vst", nfeatures = 2000)
+mouseMetaAnalysis <- FindVariableFeatures(mouseMetaAnalysis, selection.method = "mean.var.plot", nfeatures = 2000)
 top10 <- head(VariableFeatures(mouseMetaAnalysis), 10)
 plot1 <- VariableFeaturePlot(mouseMetaAnalysis)
 plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
