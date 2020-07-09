@@ -20,7 +20,7 @@ head(mouseMetaAnalysis@meta.data, 5)
 VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 plot1 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-plot1 + plot2
+CombinePlots(plots = list(plot1, plot2))
 
 #Find Variable Features for PCA
 mouseMetaAnalysis <- FindVariableFeatures(mouseMetaAnalysis, selection.method = "vst", nfeatures = 2000)
