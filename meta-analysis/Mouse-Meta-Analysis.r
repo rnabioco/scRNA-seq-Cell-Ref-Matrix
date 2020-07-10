@@ -47,3 +47,12 @@ mouseMetaAnalysis <- JackStraw(mouseMetaAnalysis, num.replicate = 100)
 mouseMetaAnalysis <- ScoreJackStraw(mouseMetaAnalysis, dims = 1:20)
 JackStrawPlot(mouseMetaAnalysis, dims = 1:15)
 ElbowPlot(mouseMetaAnalysis)
+
+#Clustering
+mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:10)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 0.5)
+head(Idents(mouseMetaAnalysis), 5)
+
+#Create unannotated UMAP
+mouseMetaAnalysis <- RunUMAP(mouseMetaAnalysis, dims = 1:10)
+DimPlot(mouseMetaAnalysis, reduction = "umap")
