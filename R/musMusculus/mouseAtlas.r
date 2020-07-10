@@ -7,7 +7,7 @@ library(digest)
 library(here)
 
 # figure out project root
-proj_dir <- here("Reference-Matrix-Generation")
+proj_dir <- here()
 
 # get scripts
 source(file.path(proj_dir, "R", "utils", "utils.r"))
