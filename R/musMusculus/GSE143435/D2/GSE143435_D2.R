@@ -17,11 +17,14 @@ D2_FACSatlasMetadata
 sum(colnames(D2_FACSatlas) %in% D2_FACSatlasMetadata$X1)
 ncol(D2_FACSatlas)
 
-source("~/Reference-Matrix-Generation/R/utils/check.r")
+source("~/Reference-Matrix-Generation/R/utils/utils.r")
 checkRawCounts(as.matrix(D2_FACSatlas))
 
+GSE143435_D2Normalized <- NormalizeData(D2_FACSatlas)
+GSE143435_D2Normalized
+
 #Reference matrix build
-new_ref_matrix <- average_clusters(mat = D2_FACSatlas, metadata = D2_FACSatlasMetadata$cell_annotation, if_log = TRUE) #Using clustifyr seurat_ref function
+new_ref_matrix <- average_clusters(mat = GSE143435_D2Normalized, metadata = D2_FACSatlasMetadata$cell_annotation, if_log = TRUE) #Using clustifyr seurat_ref function
 head(new_ref_matrix)
 tail(new_ref_matrix)            
 saveRDS(new_ref_matrix, "GSE143435D2.rds")
