@@ -32,7 +32,13 @@ plot1 + plot2
 #Linear dimension reduction/Run PCA
 all.genes <- rownames(mouseMetaAnalysis)
 mouseMetaAnalysis <- ScaleData(mouseMetaAnalysis, features = all.genes)
+<<<<<<< HEAD
 mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis, features = VariableFeatures(object = mouseMetaAnalysis), npcs = 49)
+=======
+mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis,
+                            features = VariableFeatures(object = mouseMetaAnalysis),
+                            npcs = ncol(mouseMetaAnalysis))
+>>>>>>> 55d05ec79095006baeb9dad435676b022ae3abd5
 print(mouseMetaAnalysis[["pca"]], dims = 1:5, nfeatures = 5)
 VizDimLoadings(mouseMetaAnalysis, dims = 1:2, reduction = "pca")
 DimPlot(mouseMetaAnalysis, reduction = "pca")
