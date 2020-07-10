@@ -56,3 +56,13 @@ head(Idents(mouseMetaAnalysis), 5)
 #Create unannotated UMAP
 mouseMetaAnalysis <- RunUMAP(mouseMetaAnalysis, dims = 1:10)
 DimPlot(mouseMetaAnalysis, reduction = "umap")
+
+#Differentially expressed features
+cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 1, min.pct = 0.25)
+head(cluster1.markers, n = 5)
+
+#Assign cell types
+new.cluster.ids <- colnames(mouseAtlas)
+names(new.cluster.ids) <- levels(mouseMetaAnalysis)
+mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
+DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
