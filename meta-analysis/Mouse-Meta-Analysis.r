@@ -41,3 +41,9 @@ VizDimLoadings(mouseMetaAnalysis, dims = 1:2, reduction = "pca")
 DimPlot(mouseMetaAnalysis, reduction = "pca")
 DimHeatmap(mouseMetaAnalysis, dims = 1, cells = 500, balanced = TRUE)
 DimHeatmap(mouseMetaAnalysis, dims = 1:15, cells = 500, balanced = TRUE)
+
+#Determine dimensionality
+mouseMetaAnalysis <- JackStraw(mouseMetaAnalysis, num.replicate = 100)
+mouseMetaAnalysis <- ScoreJackStraw(mouseMetaAnalysis, dims = 1:20)
+JackStrawPlot(mouseMetaAnalysis, dims = 1:15)
+ElbowPlot(mouseMetaAnalysis)
