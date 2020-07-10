@@ -35,7 +35,7 @@ mouseMetaAnalysis <- ScaleData(mouseMetaAnalysis, features = all.genes)
 #mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis, features = VariableFeatures(object = mouseMetaAnalysis), npcs = 49)
 mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis,
                             features = VariableFeatures(object = mouseMetaAnalysis),
-                            npcs = ncol(mouseMetaAnalysis))
+                            npcs = ncol(mouseMetaAnalysis) - 1)
 print(mouseMetaAnalysis[["pca"]], dims = 1:5, nfeatures = 5)
 VizDimLoadings(mouseMetaAnalysis, dims = 1:2, reduction = "pca")
 DimPlot(mouseMetaAnalysis, reduction = "pca")
