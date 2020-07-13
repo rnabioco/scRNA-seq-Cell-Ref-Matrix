@@ -60,6 +60,13 @@ DimPlot(mouseMetaAnalysis, reduction = "umap")
 #Differentially expressed features
 cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 1, min.pct = 0.25)
 head(cluster1.markers, n = 5)
+cluster5.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 5, ident.2 = c(0,3), min.pct = 0.25)
+head(cluster5.markers, n = 5)
+mouseMetaAnalysis.markers <- FindAllMarkers(mouseMetaAnalysis, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+mouseMetaAnalysis.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
+cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+top10 <- mouseMetaAnalysis.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC) #Create top 10 markers for each cluster
+DoHeatmap(pbmc, features = top10$gene) + NoLegend() #Create heat map of top 10 markers
 
 #Assign cell types
 new.cluster.ids <- colnames(mouseAtlas)
