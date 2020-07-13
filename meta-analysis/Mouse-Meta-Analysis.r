@@ -72,4 +72,4 @@ DoHeatmap(pbmc, features = top10$gene) + NoLegend() #Create heat map of top 10 m
 new.cluster.ids <- colnames(mouseAtlas)
 names(new.cluster.ids) <- levels(mouseMetaAnalysis)
 mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
-DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5)
