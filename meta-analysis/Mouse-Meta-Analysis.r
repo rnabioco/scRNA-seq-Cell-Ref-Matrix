@@ -49,8 +49,8 @@ JackStrawPlot(mouseMetaAnalysis, dims = 1:15)
 ElbowPlot(mouseMetaAnalysis)
 
 #Clustering
-mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:20)
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 4.5)
+mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:10)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0)
 head(Idents(mouseMetaAnalysis), 5)
 
 #Create unannotated UMAP
