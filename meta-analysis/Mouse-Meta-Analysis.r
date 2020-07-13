@@ -72,4 +72,7 @@ DoHeatmap(pbmc, features = top10$gene) + NoLegend() #Create heat map of top 10 m
 new.cluster.ids <- colnames(mouseAtlas)
 names(new.cluster.ids) <- levels(mouseMetaAnalysis)
 mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
-DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5)
+AnnotatedUMAP <- DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5)
+HoverLocator(plot = AnnotatedUMAP, information = FetchData(mouseMetaAnalysis, vars = c("seurat_clusters")))
+mouseMetaAnalysis@meta.data$study <- str_remove(rownames(mouseMetaAnalysis@meta.data), ".+\\(") %>% str_remove("\\)")
+DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
