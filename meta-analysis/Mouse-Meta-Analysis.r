@@ -50,7 +50,7 @@ ElbowPlot(mouseMetaAnalysis)
 
 #Clustering
 mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:10)
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 10.0)
 head(Idents(mouseMetaAnalysis), 5)
 
 #Create unannotated UMAP
