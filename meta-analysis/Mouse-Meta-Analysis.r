@@ -68,7 +68,7 @@ cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 0, logfc.threshold 
 top10 <- mouseMetaAnalysis.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC) #Create top 10 markers for each cluster
 DoHeatmap(pbmc, features = top10$gene) + NoLegend() #Create heat map of top 10 markers
 
-#Assign cell types
+#Assign cell types/Annotate UMAP
 new.cluster.ids <- colnames(mouseAtlas)
 names(new.cluster.ids) <- levels(mouseMetaAnalysis)
 mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
