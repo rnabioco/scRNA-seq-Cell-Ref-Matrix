@@ -3,8 +3,11 @@ library(Seurat)
 library(patchwork)
 library(clustifyr)
 library(tidyverse)
+library(here)
 
-mouseAtlas <- readRDS(file.path("~/Reference-Matrix-Generation/atlas/musMusculus/MouseAtlas.rds"))
+# figure out project root
+proj_dir <- here()
+mouseAtlas <- readRDS(file.path(proj_dir, "atlas", "musMusculus", "mouseAtlas.rds"))
 
 mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 0, min.features = 0)
 mouseMetaAnalysis
