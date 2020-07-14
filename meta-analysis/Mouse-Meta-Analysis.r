@@ -10,7 +10,6 @@ proj_dir <- here()
 mouseAtlas <- readRDS(file.path(proj_dir, "atlas", "musMusculus", "mouseAtlas.rds"))
 
 mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 0, min.features = 0)
-mouseMetaAnalysis
 gc()
 
 #Normalize Data
