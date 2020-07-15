@@ -144,3 +144,28 @@ HoverLocator(plot = AnnotatedUMAP, information = FetchData(mouseMetaAnalysis, va
 mouseMetaAnalysis@meta.data$study <- str_remove(rownames(mouseMetaAnalysis@meta.data), ".+\\(") %>% str_remove("\\)")
 DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
 ```
+
+## Visualizing hierarchy of clusters
+
+Another useful analysis to determine the validity of the cell clusters is to visualize the hierarchy of the generated clusters. This could be helpful in further downstream analysis when similar cell types are added to the atlas. Here, the clustree library is used to help visualize the hierarchy of clusters.
+
+```{r hierarchy of clusters}
+mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.data)
+
+g <- clustree(mouseMetaAnalysis, 
+              layout = "sugiyama",
+              use_core_edges = FALSE,
+              node_text_size = 2,
+              node_alpha = 0,
+              edge_width = 1) + 
+  scale_edge_alpha(range = c(0.05,0.05)) + # otherwise edges cover everything up
+  geom_text(aes(x = 0, y = -10, label = "mouse", size = 2)) # just to make some room so labels aren't cut off
+
+# move the single cell layer of nodes down for more space
+gedit <- g$data[, "RNA_snn_res."] == 1000
+g$data[gedit, "y"] <- -5
+
+# rotate single cell layer texts
+g$layers[[3]]$aes_params$angle <- 90
+g
+```
