@@ -98,4 +98,21 @@ JackStrawPlot(mouseMetaAnalysis, dims = 1:15)
 ElbowPlot(mouseMetaAnalysis)
 ```
 
+## Clustering and unannotated UMAP
+
+Based on the jack straw and elbow plots, the number of clusters to accurately represent the data is around 20 to 30 clusters. We will generate clusters with a resolution of 5.0 to accomplish this. It is important to note that changing the resolution value will drastically change the number of clusters produced by the ```FindClusters()``` method. 
+
+```{r Clustering and unannotated UMAP}
+#Clustering
+mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:10)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0)
+head(Idents(mouseMetaAnalysis), 5)
+
+#Create unannotated UMAP
+mouseMetaAnalysis <- RunUMAP(mouseMetaAnalysis, dims = 1:10)
+DimPlot(mouseMetaAnalysis, reduction = "umap")
+```
+
+##
+
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
