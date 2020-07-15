@@ -4,6 +4,7 @@ library(patchwork)
 library(clustifyr)
 library(tidyverse)
 library(digest)
+library(here)
 
 mat_PFC <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124952/suppl/GSE124952_expression_matrix.csv.gz")
 #Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
@@ -23,13 +24,17 @@ meta_PFC
 sum(colnames(mat_PFC) %in% meta_PFC$CellType)
 ncol(mat_PFC)
 
-source("~/Reference-Matrix-Generation/R/utils/utils.r")
+# figure out project root
+proj_dir <- here()
+utils <- readRDS(file.path(proj_dir, "R", "utils"))
+
+source(utils)
 checkRawCounts(as.matrix(mat_PFC))
 
 GSE124952Normalized <- NormalizeData(mat_PFC)
 GSE124952Normalized
 
-new_ref_matrix <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = FALSE)
+new_ref_matrix <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = TRUE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = FALSE)
 head(new_ref_matrix)
 tail(new_ref_matrix)
