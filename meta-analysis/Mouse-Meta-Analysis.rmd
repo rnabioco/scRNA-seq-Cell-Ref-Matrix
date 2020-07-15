@@ -27,10 +27,35 @@ library(clustree)
 
 ## Load Mouse Atlas
 
-We will now load the mouse atlas into the R data section. This will be accomplished with the here library establishing the root of the project and then 
+The mouse atlas will now be loaded into the local R data section. This will be accomplished with the here library establishing the root of the project and then loading in the mouseAtlas.rds file into the mouseAtlas matrix object. A Seurat object will then be created in order to perform single cell analysis on the mouse atlas. 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```r
+proj_dir <- here()
+mouseAtlas <- readRDS(file.path(proj_dir, "atlas", "musMusculus", "mouseAtlas.rds"))
+
+mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 0, min.features = 0)
+gc()
+
+#Normalize Data
+mouseMetaAnalysis <- NormalizeData(mouseMetaAnalysis, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+## Preprocessing Workflow
+
+Following the creation of the Seurat object, the standard workflow for annotating cell types will be followed. First we will filter out cells that do not meet any of the standard QC metrics, data normalization and scaling. First we will filter out genes that contain mitochondrial contamination using a percentage feature set and scanning for the ```^mt-``` pattern. All of the lines following help to visualize the QC metrics we are filtering out by (nCounts, nFeatures, percent.mt)
+```r
+#Preprocessing workflow
+mouseMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(mouseMetaAnalysis, pattern = "^mt-")
+VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+plot1 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
+```
+```{r QC metrics visualization, echo=FALSE}
+VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+plot1 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(mouseMetaAnalysis, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
