@@ -6,7 +6,8 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
 ```
 
 ## Mouse meta-analysis
@@ -44,7 +45,7 @@ mouseMetaAnalysis <- NormalizeData(mouseMetaAnalysis, normalization.method = "Lo
 
 Following the creation of the Seurat object, the standard workflow for annotating cell types will be followed. First we will filter out cells that do not meet any of the standard QC metrics, data normalization and scaling. First we will filter out genes that contain mitochondrial contamination using a percentage feature set and scanning for the ```^mt-``` pattern. All of the lines following help to visualize the QC metrics we are filtering out by (nCounts, nFeatures, percent.mt)
 
-```{r}
+```{r preprocessing, fig.width=15}
 #Preprocessing workflow
 mouseMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(mouseMetaAnalysis, pattern = "^mt-")
 VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
@@ -57,7 +58,7 @@ plot1 + plot2
 
 In order to run principal component analysis on the data, cells with high gene expression variability compared to the rest of the data will need to be determined. This will help highlight biological signal of cells in further downstream analysis with PCA and uniform manifold approximation and projection (UMAP). The highly variable genes can also be plotted on a variable feature plot showing standard variance against average gene expression.  
 
-```{r Find Variable Features}
+```{r Find Variable Features, fig.width=15}
 #Find Variable Features for PCA
 mouseMetaAnalysis <- FindVariableFeatures(mouseMetaAnalysis, selection.method = "mean.var.plot", nfeatures = 2000)
 top10 <- head(VariableFeatures(mouseMetaAnalysis), 10)
@@ -139,7 +140,7 @@ Annotating the previously generated UMAP can clarify cell types present in the U
 new.cluster.ids <- colnames(mouseAtlas)
 names(new.cluster.ids) <- levels(mouseMetaAnalysis)
 mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
-AnnotatedUMAP <- DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5) 
+AnnotatedUMAP <- DimPlot(mouseMetaAnalysis, reduction = "umap", label = FALSE, pt.size = 0.5) 
 HoverLocator(plot = AnnotatedUMAP, information = FetchData(mouseMetaAnalysis, vars = c("seurat_clusters")))
 mouseMetaAnalysis@meta.data$study <- str_remove(rownames(mouseMetaAnalysis@meta.data), ".+\\(") %>% str_remove("\\)")
 DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
@@ -149,7 +150,10 @@ DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
 
 Another useful analysis to determine the validity of the cell clusters is to visualize the hierarchy of the generated clusters. This could be helpful in further downstream analysis when similar cell types are added to the atlas. Here, the clustree library is used to help visualize the hierarchy of clusters.
 
-```{r hierarchy of clusters}
+```{r hierarchy of clusters, fig.width=15}
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 1.0)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 3.0)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0)
 mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.data)
 
 g <- clustree(mouseMetaAnalysis, 
