@@ -26,7 +26,7 @@ ncol(mat_PFC)
 
 # figure out project root
 proj_dir <- here()
-utils <- file.path(proj_dir, "R", "utils", "utils.r")
+utils <- file.path(proj_dir, "Reference-Matrix-Generation", "R", "utils", "utils.r")
 
 source(utils)
 checkRawCounts(as.matrix(mat_PFC))

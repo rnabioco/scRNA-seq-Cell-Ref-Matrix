@@ -8,7 +8,7 @@ library(clustree)
 
 # figure out project root
 proj_dir <- here()
-mouseAtlas <- readRDS(file.path(proj_dir, "atlas", "musMusculus", "mouseAtlas.rds"))
+mouseAtlas <- readRDS(file.path(proj_dir, "Reference-Matrix-Generation" ,"atlas", "musMusculus", "mouseAtlas.rds"))
 
 mouseMetaAnalysis <- CreateSeuratObject(counts = mouseAtlas, project = "Mouse-Meta-Analysis", min.cells = 0, min.features = 0)
 gc()
