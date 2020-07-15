@@ -67,6 +67,35 @@ plot1 + plot2
 ```
 
 
-## 
+## Linear dimension reduction and PCA
+
+Once the variable features have been highlighted, the data can now be reduced into two dimensions from a large number of dimensions through principal component analysis. First, the data must be "scaled" in which a linear transformation shifts the expression of each gene so that the mean expression across cells is zero and that the variance across each cell is one. This should help highly expressed genes not to dominate the data. 
+
+Next, PCA will occur which will scale the data down into two dimensions. The results can be visualized through heat maps and scatter plots. 
+
+```{r Linear dimension reduction and PCA}
+all.genes <- rownames(mouseMetaAnalysis)
+mouseMetaAnalysis <- ScaleData(mouseMetaAnalysis, features = all.genes)
+mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis,
+                            features = all.genes,
+                            npcs = ncol(mouseMetaAnalysis) - 1)
+print(mouseMetaAnalysis[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(mouseMetaAnalysis, dims = 1:2, reduction = "pca")
+DimPlot(mouseMetaAnalysis, reduction = "pca")
+DimHeatmap(mouseMetaAnalysis, dims = 1, cells = 500, balanced = TRUE)
+DimHeatmap(mouseMetaAnalysis, dims = 1:15, cells = 500, balanced = TRUE)
+```
+
+## Determine dimensionality
+
+Following PCA, the number of PCs or clusters that are needed to fully represent the data on a UMAP need to be determined. Many scRNA-seq datasets contain technical noise in the various clusters and the number of clusters needed to represent the dataset must be determined. In this analysis, jack straw plots and a slightly more heuristic elbow plot will be used to determine the accurate number of clusters for UMAP analysis. 
+
+```{r Determine dimensionality}
+#Determine dimensionality
+mouseMetaAnalysis <- JackStraw(mouseMetaAnalysis, num.replicate = 100)
+mouseMetaAnalysis <- ScoreJackStraw(mouseMetaAnalysis, dims = 1:20)
+JackStrawPlot(mouseMetaAnalysis, dims = 1:15)
+ElbowPlot(mouseMetaAnalysis)
+```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
