@@ -113,6 +113,34 @@ mouseMetaAnalysis <- RunUMAP(mouseMetaAnalysis, dims = 1:10)
 DimPlot(mouseMetaAnalysis, reduction = "umap")
 ```
 
-##
+## Cluster biomarkers
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+In order to determine which genes are being expressed in the UMAP, biomarkers must be clustered through the use of the ```FindAllMarkers()``` function. This function automates the process across all clusters and helps to expedite the biomarker selection process. A number of visualization steps can be taken here, but in this analysis, a heat map of the top 10 clusters with each expression of each biomarker will be shown. 
+
+```{r cluster biomarkers}
+#Cluster biomarkers
+cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 1, min.pct = 0.25)
+head(cluster1.markers, n = 5)
+cluster5.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 5, ident.2 = c(0,3), min.pct = 0.25)
+head(cluster5.markers, n = 5)
+mouseMetaAnalysis.markers <- FindAllMarkers(mouseMetaAnalysis, only.pos = TRUE, min.pct = 0.1, logfc.threshold = 0.25)
+mouseMetaAnalysis.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
+cluster1.markers <- FindMarkers(mouseMetaAnalysis, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+top10 <- mouseMetaAnalysis.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC) #Create top 10 markers for each cluster
+DoHeatmap(mouseMetaAnalysis, features = top10$gene) + NoLegend() #Create heat map of biomarkers for all top 17 clusters
+```
+
+## Annotate UMAP
+
+Annotating the previously generated UMAP can clarify cell types present in the UMAP and allows for a better analysis of which cells are located where on the UMAP. Here, the column names in the ```mouseAtlas.rds``` file are the cell types so we can rename the identities of the cells on the UMAP with the correct cell names. ```HoverLocator``` and a UMAP grouped by study can also be helpful to highlight where each cell in the atlas originates. 
+
+```{r annotate UMAP}
+#Assign cell types/Annotate UMAP
+new.cluster.ids <- colnames(mouseAtlas)
+names(new.cluster.ids) <- levels(mouseMetaAnalysis)
+mouseMetaAnalysis <- RenameIdents(mouseMetaAnalysis, new.cluster.ids)
+AnnotatedUMAP <- DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt.size = 0.5) 
+HoverLocator(plot = AnnotatedUMAP, information = FetchData(mouseMetaAnalysis, vars = c("seurat_clusters")))
+mouseMetaAnalysis@meta.data$study <- str_remove(rownames(mouseMetaAnalysis@meta.data), ".+\\(") %>% str_remove("\\)")
+DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
+```
