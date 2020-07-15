@@ -23,7 +23,7 @@ meta_PFC
 sum(colnames(mat_PFC) %in% meta_PFC$CellType)
 ncol(mat_PFC)
 
-source("~/Reference-Matrix-Generation/R/utils/check.r")
+source("~/Reference-Matrix-Generation/R/utils/utils.r")
 checkRawCounts(as.matrix(mat_PFC))
 
 GSE124952Normalized <- NormalizeData(mat_PFC)
