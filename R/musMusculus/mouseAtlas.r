@@ -13,7 +13,7 @@ proj_dir <- here()
 source(file.path(proj_dir, "R", "utils", "utils.r"))
 
 # path to matrices
-ref_matrix_dir <- file.path(proj_dir, "ref_matrices", "musMusculus")
+ref_matrix_dir <- file.path(proj_dir, "Reference-Matrix-Generation", "ref_matrices", "musMusculus")
 
 # find all .rds files in the ref_matrices directory,
 # name vector with filename without .rds
@@ -29,7 +29,7 @@ idx_to_keep <- which(!names(ref_matrices_fns) %in% records_to_drop)
 ref_matrices_fns <- ref_matrices_fns[idx_to_keep]
 
 # path to mouse genes
-mouse_genes_fn <- file.path(proj_dir,
+mouse_genes_fn <- file.path(proj_dir, "Reference-Matrix-Generation",
                             "data",
                             "geneList",
                             "mouse_genes.tsv.gz")
