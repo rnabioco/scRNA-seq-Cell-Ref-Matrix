@@ -7,7 +7,7 @@ library(digest)
 library(here)
 
 proj_dir <- here()
-GSE131957 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE131957_Raw 2", "GSM3832735_wt_naive_gex.csv.gz")
+GSE131957 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE131957_Raw 2", "GSM3832738_wt_tumor_adt.csv.gz")
 
 mat_mouseLungLesions <- read.csv(GSE131957)
 mat_mouseLungLesions <- mat_mouseLungLesions %>%
@@ -38,4 +38,4 @@ colnames(new_ref_matrix_hashed) <- newcols
 head(new_ref_matrix_hashed)
 tail(new_ref_matrix_hashed)
 saveRDS(new_ref_matrix_hashed, "GSE131957Hashed.rds")
-saveRDS(new_ref_matrix, "GSE131957.rds")
+saveRDS(new_ref_matrix, "GSE131957WTTumorADT.rds")

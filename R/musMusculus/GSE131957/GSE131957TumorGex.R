@@ -27,7 +27,9 @@ ncol(mat_mouseLungLesions)
 source("~/Reference-Matrix-Generation/R/utils/utils.r")
 checkRawCounts(as.matrix(mat_mouseLungLesions))
 
-new_ref_matrix <- average_clusters(mat = mat_mouseLungLesions, metadata = meta2, cluster_col = "cluster_annotation", if_log = FALSE)
+GSE131957WTNaiveNormalized <- NormalizeData(mat_mouseLungLesions)
+
+new_ref_matrix <- average_clusters(mat = GSE131957WTNaiveNormalized, metadata = meta2, cluster_col = "cluster_annotation", if_log = FALSE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_mouseLungLesions, metadata = meta_mouseLungLesions, if_log = FALSE)
 head(new_ref_matrix)
 tail(new_ref_matrix)
