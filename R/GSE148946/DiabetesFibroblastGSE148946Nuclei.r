@@ -4,17 +4,21 @@ library(patchwork)
 library(clustifyr)
 library(tidyverse)
 
-mat_FibroblastNucleiDiabetes <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE148nnn/GSE148946/suppl/GSE148946_wholecell_normdata.csv.gz")
+mat_FibroblastNucleiDiabetesExtraCol <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE148nnn/GSE148946/suppl/GSE148946_wholecell_normdata.csv.gz")
+mat_FibroblastNucleiDiabetes = subset(mat_FibroblastNucleiDiabetesExtraCol, select = -c(gene_1))
 mat_FibroblastNucleiDiabetes <- mat_FibroblastNucleiDiabetes %>%
-  as.data.frame() %>%
-  column_to_rownames('gene') %>%
-  as.matrix() %>%
-  t()
+  #as.data.frame() %>%
+  column_to_rownames('gene')
+  #as.matrix() %>%
+  #t()
 mat_FibroblastNucleiDiabetes[1:5, 1:5]
 
 meta_FibroblastNucleiDiabetes <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE148nnn/GSE148946/suppl/GSE148946_wholecell_metadata.csv.gz")
 sum(colnames(mat_FibroblastNucleiDiabetes) %in% meta_FibroblastNucleiDiabetes$orig.ident)
 ncol(mat_FibroblastNucleiDiabetes)
+
+source("~/Reference-Matrix-Generation/R/utils/utils.r")
+checkRawCounts(as.matrix(mat_FibroblastNucleiDiabetes))
 
 new_ref_matrix <- average_clusters(mat = mat_FibroblastNucleiDiabetes, metadata = meta_FibroblastNucleiDiabetes$trt, if_log = TRUE)
 head(new_ref_matrix)

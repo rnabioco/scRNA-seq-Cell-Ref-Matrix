@@ -34,7 +34,7 @@ checkRawCounts(as.matrix(mat_PFC))
 GSE124952Normalized <- NormalizeData(mat_PFC)
 GSE124952Normalized
 
-new_ref_matrix <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = TRUE)
+new_ref_matrix <- average_clusters(mat = GSE124952Normalized, metadata = meta_PFC$CellType, if_log = FALSE)
 new_ref_matrix_hashed <- average_clusters(mat = mat_PFC, metadata = meta_PFC$CellType, if_log = FALSE)
 head(new_ref_matrix)
 tail(new_ref_matrix)
