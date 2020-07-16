@@ -4,22 +4,25 @@ library(patchwork)
 library(clustifyr)
 library(tidyverse)
 library(digest)
+library(here)
 
-untar("https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE131957&format=file")
-mat_mouseLungLesions <- read.csv(UntarMouseLungLesions)
+proj_dir <- here()
+GSE131957 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE131957_Raw 2", "GSM3832735_wt_naive_gex.csv.gz")
+
+mat_mouseLungLesions <- read.csv(GSE131957)
 mat_mouseLungLesions <- mat_mouseLungLesions %>%
   # as.data.frame() %>%
-  column_to_rownames('gene')
+  column_to_rownames('X')
 #  as.matrix() %>%
 #  t()
 mat_mouseLungLesions[1:5, 1:5]
 
-meta_mouseLungLesions <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE131nnn/GSE131057/suppl/GSE131957_single_cell_metadata.csv.gz")
+meta_mouseLungLesions <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE131nnn/GSE131957/suppl/GSE131957_single_cell_metadata.csv.gz")
 meta_mouseLungLesions
 sum(colnames(mat_mouseLungLesions) %in% meta_mouseLungLesions$cluster)
 ncol(mat_mouseLungLesions)
 
-source("~/Reference-Matrix-Generation/R/utils/check.r")
+source("~/Reference-Matrix-Generation/R/utils/utils.r")
 checkRawCounts(as.matrix(mat_mouseLungLesions))
 
 new_ref_matrix <- average_clusters(mat = mat_mouseLungLesions, metadata = meta_mouseLungLesions, if_log = FALSE)
