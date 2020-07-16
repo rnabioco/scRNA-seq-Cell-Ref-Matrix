@@ -10,7 +10,7 @@ library(here)
 proj_dir <- here()
 
 # get scripts
-source(file.path(proj_dir, "R", "utils", "utils.r"))
+source(file.path(proj_dir, "Reference-Matrix-Generation", "R", "utils", "utils.r"))
 
 # path to matrices
 ref_matrix_dir <- file.path(proj_dir, "Reference-Matrix-Generation", "ref_matrices", "musMusculus")
