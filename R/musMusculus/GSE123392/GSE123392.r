@@ -7,8 +7,8 @@ library(digest)
 library(here)
 
 proj_dir <- here()
-GSE123392 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE123392", "GSE123392_scRNAseq_rawmatrix.txt")
-GSE123392Meta <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE123392", "GSE123392_scRNAseq_metadata.txt")
+GSE123392 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE123392_RAW", "Matrices", "GSM3502587_AB2787M.txt.gz")
+GSE123392Meta <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE123392_RAW", "Metadata", "GSE123392_scRNAseq_metadata.txt")
 
 mat_GSE123392 <- read.table(GSE123392, sep = " ")
 mat_GSE123392 <- as.matrix(mat_GSE123392)
