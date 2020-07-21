@@ -10,11 +10,11 @@ proj_dir <- here()
 GSE115301 <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE115301", "GSE115301_dnMAML1_EV_10x_count.txt")
 GSE115301Meta <- file.path(proj_dir, "Reference-Matrix-Generation", "data", "GSE115301", "GSE115301_dnMAML1_EV_10x_metadata.txt")
 
-mat_GSE115301 <- read.table(GSE115301, sep = "\t", skip = 1)
+mat_GSE115301 <- read.table(GSE115301, sep = "\t", row.names = 1)
 mat_GSE115301 <- as.matrix(mat_GSE115301)
 mat_GSE115301[1:5, 1:5]
 
-meta_GSE115301 <- read.table(GSE115301Meta, sep = "\t", skip = 1)
+meta_GSE115301 <- read.table(GSE115301Meta, sep = "\t", row.names = 1)
 meta_GSE115301
 ncol(mat_GSE115301)
 
