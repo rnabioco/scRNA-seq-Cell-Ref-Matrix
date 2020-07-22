@@ -25,7 +25,9 @@ checkRawCounts(as.matrix(mat_GSE115746))
 
 GSE115746Normalized <- NormalizeData(mat_GSE115746)
 
-new_ref_matrix <- average_clusters(mat = GSE115746Normalized, metadata = meta_GSE115746$cell_cluster, if_log = FALSE)
+meta2 <- meta_GSE115746 %>% column_to_rownames("sample_name")
+meta2 <- meta2[colnames(GSE115746Normalized),]
+new_ref_matrix <- average_clusters(mat = GSE115746Normalized, metadata = meta2$cell_cluster, if_log = FALSE)
 head(new_ref_matrix)
 tail(new_ref_matrix)
 saveRDS(new_ref_matrix, "GSE115746.rds")
