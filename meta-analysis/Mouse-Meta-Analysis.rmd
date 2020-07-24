@@ -111,7 +111,7 @@ Based on the jack straw and elbow plots, the number of clusters to accurately re
 ```{r Clustering and unannotated UMAP}
 #Clustering
 mouseMetaAnalysis <- FindNeighbors(mouseMetaAnalysis, dims = 1:10)
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = TRUE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = FALSE)
 head(Idents(mouseMetaAnalysis), 5)
 
 #Create unannotated UMAP
@@ -156,9 +156,9 @@ DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
 Another useful analysis to determine the validity of the cell clusters is to visualize the hierarchy of the generated clusters. This could be helpful in further downstream analysis when similar cell types are added to the atlas. Here, the clustree library is used to help visualize the hierarchy of clusters.
 
 ```{r hierarchy of clusters, fig.width=15}
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 1.0, verbose = TRUE)
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 3.0, verbose = TRUE)
-mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = TRUE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 1.0, verbose = FALSE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 3.0, verbose = FALSE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = FALSE)
 mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.data)
 
 g <- clustree(mouseMetaAnalysis, 
