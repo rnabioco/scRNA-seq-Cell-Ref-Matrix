@@ -20,3 +20,5 @@ VlnPlot(SeuratLung, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), nc
 plot1 <- FeatureScatter(SeuratLung, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(SeuratLung, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plot1 + plot2
+
+SeuratLung <- NormalizeData(SeuratLung)
