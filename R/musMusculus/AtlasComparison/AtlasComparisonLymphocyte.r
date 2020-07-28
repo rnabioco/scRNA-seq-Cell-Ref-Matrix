@@ -76,12 +76,16 @@ res <- clustify(
 res@meta.data[1:10, ]
 saveRDS(res@meta.data, file = "clustifyLymphocyte.rds")
 
-new.cluster.ids <- res@meta.data$type
+unique(unlist(res@meta.data$type))
+
+new.cluster.ids <- c("NK/T cells (GSE143435D7)", "T cell-Spleen (Tabula-Muris-drop)", "immature B cell-Marrow (Tabula-Muris-drop)", "mac&contam (GSE131957ccr7koTumor)", "granulocyte-Marrow (Tabula-Muris-drop)", "Immune (GSE143435D2)", "basophil-Marrow (Tabula-Muris-drop)", "DC2 (GSE131957ccr7koNaive)")
 names(new.cluster.ids) <- levels(SeuratLymphocyte)
-SeuratLung <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
 DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 
-new.cluster.ids <- meta_Lymphocyte$`Cell Subtype`
+unique(unlist(meta_Lymphocyte$`Cell Subtype`))
+
+new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
 names(new.cluster.ids) <- levels(SeuratLymphocyte)
-SeuratLung <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
 DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
