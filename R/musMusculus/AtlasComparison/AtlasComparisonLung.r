@@ -14,6 +14,8 @@ mat_Lung <- Read10X(data.dir = proj_dir, gene.column = 1)
 SeuratLung <- CreateSeuratObject(counts = mat_Lung, project = "mat_Lung", min.cells = 3, min.features = 200)
 SeuratLung
 
+meta_Lung <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE141nnn/GSE141259/suppl/GSE141259_WholeLung_cellinfo.csv.gz")
+
 SeuratLung[["percent.mt"]] <- PercentageFeatureSet(SeuratLung, pattern = "^mt-")
 # Visualize QC metrics as a violin plot
 VlnPlot(SeuratLung, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
@@ -71,7 +73,16 @@ res <- clustify(
 res@meta.data[1:10, ]
 saveRDS(res@meta.data, file = "clustifyLung.rds")
 
-new.cluster.ids <- res@meta.data$cell_type
+unique(unlist(res@meta.data$type))
+
+new.cluster.ids <- c("Macrophage (GSE113049)", "Other Injured AEC2 (GSE113049)", "lung endothelial cell-Lung (Tabula-Muris-drop)", "stromal cell-Lung (Tabula-Muris-drop)", "Ciliated (GSE113049)", "Endothelial/Fibroblast (GSE113049)", "ciliated columnar cell of tracheobronchial tree-Lung (Tabula-Muris-drop)", "T cell-Lung (Tabula-Muris-drop)")
+names(new.cluster.ids) <- levels(SeuratLung)
+SeuratLung <- RenameIdents(SeuratLyung, new.cluster.ids)
+DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+
+unique(unlist(meta_Lung$cell.type))
+
+new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
 names(new.cluster.ids) <- levels(SeuratLung)
 SeuratLung <- RenameIdents(SeuratLung, new.cluster.ids)
 DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
