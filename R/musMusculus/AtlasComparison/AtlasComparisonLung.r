@@ -59,3 +59,12 @@ cluster1.markers <- FindMarkers(SeuratLung, ident.1 = 0, logfc.threshold = 0.25,
 top10 <- SeuratLung.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC)
 DoHeatmap(SeuratLung, features = top10$gene) + NoLegend()
 saveRDS(SeuratLung, file = "lung.rds")
+
+proj_dir <- file.path("Reference-Matrix-Generation", "atlas", "musMusculus", "MouseAtlas.rds")
+mouseAtlas <- readRDS(proj_dir)
+res <- clustify(
+  input = SeuratLung,          # a Seurat object
+  ref_mat = mouseAtlas,         # matrix of RNA-seq expression data for each cell type
+  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
+)

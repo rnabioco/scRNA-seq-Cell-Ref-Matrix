@@ -62,3 +62,13 @@ cluster1.markers <- FindMarkers(SeuratLymphocyte, ident.1 = 0, logfc.threshold =
 top10 <- SeuratLymphocyte.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC)
 DoHeatmap(SeuratLymphocyte, features = top10$gene) + NoLegend()
 saveRDS(SeuratLymphocyte, file = "lymphocyte.rds")
+
+proj_dir <- file.path("Reference-Matrix-Generation", "atlas", "musMusculus", "MouseAtlas.rds")
+mouseAtlas <- readRDS(proj_dir)
+res <- clustify(
+  input = SeuratLymphocyte,          # a Seurat object
+  ref_mat = mouseAtlas,         # matrix of RNA-seq expression data for each cell type
+  cluster_col = "RNA_snn_res.0.5", # name of column in meta.data containing cell clusters
+  obj_out = TRUE               # output Seurat object with cell type inserted as "type" column
+)
+res@meta.data[1:10, ]
