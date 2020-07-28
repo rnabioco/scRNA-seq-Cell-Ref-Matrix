@@ -65,6 +65,8 @@ mouseAtlas <- readRDS(proj_dir)
 res <- clustify(
   input = SeuratLung,          # a Seurat object
   ref_mat = mouseAtlas,         # matrix of RNA-seq expression data for each cell type
-  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  cluster_col = "RNA_snn_res.0.5", # name of column in meta.data containing cell clusters
   obj_out = TRUE              # output SCE object with cell type inserted as "type" column
 )
+res@meta.data[1:10, ]
+saveRDS(res@meta.data, file = "clustifyLung.rds")
