@@ -70,3 +70,8 @@ res <- clustify(
 )
 res@meta.data[1:10, ]
 saveRDS(res@meta.data, file = "clustifyLung.rds")
+
+new.cluster.ids <- res@meta.data$cell_type
+names(new.cluster.ids) <- levels(SeuratLung)
+SeuratLung <- RenameIdents(SeuratLung, new.cluster.ids)
+DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()

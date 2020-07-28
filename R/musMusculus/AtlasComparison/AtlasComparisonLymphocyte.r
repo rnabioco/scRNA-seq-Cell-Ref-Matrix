@@ -14,6 +14,8 @@ mat_Lymphocyte <- mat_Lymphocyte %>%
   #t() 
 mat_Lymphocyte[1:5, 1:5]
 
+meta_Lymphocyte <- read_tsv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147668/suppl/GSE147668_table_cellmetadata_lungimmune.tsv.gz")
+
 SeuratLymphocyte <- CreateSeuratObject(counts = mat_Lymphocyte, project = "mat_Lymphocyte", min.cells = 3, min.features = 200)
 SeuratLymphocyte
 
@@ -72,3 +74,14 @@ res <- clustify(
   obj_out = TRUE               # output Seurat object with cell type inserted as "type" column
 )
 res@meta.data[1:10, ]
+saveRDS(res@meta.data, file = "clustifyLymphocyte.rds")
+
+new.cluster.ids <- res@meta.data$type
+names(new.cluster.ids) <- levels(SeuratLymphocyte)
+SeuratLung <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+
+new.cluster.ids <- meta_Lymphocyte$`Cell Subtype`
+names(new.cluster.ids) <- levels(SeuratLymphocyte)
+SeuratLung <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
