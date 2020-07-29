@@ -6,6 +6,9 @@ library(tidyverse)
 library(digest)
 library(here)
 library(Matrix)
+library(ggplot2)
+library(cowplot)
+library(rlang)
 
 proj_dir <- here()
 proj_dir <- file.path("Reference-Matrix-Generation", "data", "atlasComparison", "GSE141259")
@@ -91,8 +94,24 @@ unique(unlist(meta_Lung$cell.type))
 Idents(SeuratLung) <- meta_Lung$cell.type
 MetadataTypes <- DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
 
-par(mfrow=c(2,1))
-{
-  InferredTypes
-  MetadataTypes
-}
+prow <- plot_grid(
+  InferredTypes + theme(legend.position="none"),
+  MetadataTypes + theme(legend.position="none"),
+  align = 'vh',
+  labels = c("Lung Inferred", "Lung Metadata"),
+  hjust = -1,
+  nrow = 1
+  )
+prow
+legendA <- get_legend(
+  # create some space to the left of the legend
+  InferredTypes + theme(legend.box.margin = margin(0, 0, 0, 12))
+)
+legendB <- get_legend(
+  MetadataTypes + theme(legend.box.margin = margin(0,0,0,12))
+)
+prow2 <- plot_grid(
+  legendA, 
+  legendB
+  )
+plot_grid(prow, prow2, ncol = 1, rel_heights = c(1, .1))
