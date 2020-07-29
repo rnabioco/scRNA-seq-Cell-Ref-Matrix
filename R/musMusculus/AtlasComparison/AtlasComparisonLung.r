@@ -94,24 +94,32 @@ unique(unlist(meta_Lung$cell.type))
 Idents(SeuratLung) <- meta_Lung$cell.type
 MetadataTypes <- DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
 
-prow <- plot_grid(
-  InferredTypes + theme(legend.position="none"),
-  MetadataTypes + theme(legend.position="none"),
-  align = 'vh',
-  labels = c("Lung Inferred", "Lung Metadata"),
-  hjust = -1,
-  nrow = 1
-  )
-prow
-legendA <- get_legend(
+InferredTypes + MetadataTypes
+
+#legendA <- get_legend(
   # create some space to the left of the legend
-  InferredTypes + theme(legend.box.margin = margin(0, 0, 0, 12))
-)
-legendB <- get_legend(
-  MetadataTypes + theme(legend.box.margin = margin(0,0,0,12))
-)
-prow2 <- plot_grid(
-  legendA, 
-  legendB
-  )
-plot_grid(prow, prow2, ncol = 1, rel_heights = c(1, .1))
+#  InferredTypes + theme(legend.box.margin = margin(0,0,0, 12))
+#)
+#prow <- plot_grid(
+#  InferredTypes + theme(legend.position="none"),
+#  legendA,
+#  align = 'vh',
+#  labels = c("Lung Inferred", ""),
+#  hjust = -1,
+#  nrow = 1,
+#  scale = 1
+#  )
+#prow
+#legendB <- get_legend(
+#  MetadataTypes + theme(legend.box.margin = margin(0,0,0,12))
+#)
+#prow2 <- plot_grid(
+ # MetadataTypes + theme(legend.position="none"),
+ # legendB,
+ # align = 'vh',
+ # labels = c("Lung Metadata", ""),
+ # hjust = -1,
+ # nrow = 1
+ # )
+#prow2
+#plot_grid(prow, prow2, ncol = 1, rel_heights = c(2, .1), rel_widths = c(3, 1))
