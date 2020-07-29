@@ -75,14 +75,16 @@ saveRDS(res@meta.data, file = "clustifyLung.rds")
 
 unique(unlist(res@meta.data$type))
 
-new.cluster.ids <- c("Macrophage (GSE113049)", "Other Injured AEC2 (GSE113049)", "lung endothelial cell-Lung (Tabula-Muris-drop)", "stromal cell-Lung (Tabula-Muris-drop)", "Ciliated (GSE113049)", "Endothelial/Fibroblast (GSE113049)", "ciliated columnar cell of tracheobronchial tree-Lung (Tabula-Muris-drop)", "T cell-Lung (Tabula-Muris-drop)")
-names(new.cluster.ids) <- levels(SeuratLung)
-SeuratLung <- RenameIdents(SeuratLyung, new.cluster.ids)
+#new.cluster.ids <- c("Macrophage (GSE113049)", "Other Injured AEC2 (GSE113049)", "lung endothelial cell-Lung (Tabula-Muris-drop)", "stromal cell-Lung (Tabula-Muris-drop)", "Ciliated (GSE113049)", "Endothelial/Fibroblast (GSE113049)", "ciliated columnar cell of tracheobronchial tree-Lung (Tabula-Muris-drop)", "T cell-Lung (Tabula-Muris-drop)")
+#names(new.cluster.ids) <- levels(SeuratLung)
+#SeuratLung <- RenameIdents(SeuratLyung, new.cluster.ids)
+Idents(SeuratLung) <- res@meta.data$type
 DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 
 unique(unlist(meta_Lung$cell.type))
 
-new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
-names(new.cluster.ids) <- levels(SeuratLung)
-SeuratLung <- RenameIdents(SeuratLung, new.cluster.ids)
+#new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
+#names(new.cluster.ids) <- levels(SeuratLung)
+#SeuratLung <- RenameIdents(SeuratLung, new.cluster.ids)
+Idents(SeuratLung) <- meta_Lung$cell.type
 DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
