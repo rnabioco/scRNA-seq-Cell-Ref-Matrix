@@ -78,14 +78,16 @@ saveRDS(res@meta.data, file = "clustifyLymphocyte.rds")
 
 unique(unlist(res@meta.data$type))
 
-new.cluster.ids <- c("NK/T cells (GSE143435D7)", "T cell-Spleen (Tabula-Muris-drop)", "immature B cell-Marrow (Tabula-Muris-drop)", "mac&contam (GSE131957ccr7koTumor)", "granulocyte-Marrow (Tabula-Muris-drop)", "Immune (GSE143435D2)", "basophil-Marrow (Tabula-Muris-drop)", "DC2 (GSE131957ccr7koNaive)")
-names(new.cluster.ids) <- levels(SeuratLymphocyte)
-SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
-DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+#new.cluster.ids <- c("NK/T cells (GSE143435D7)", "T cell-Spleen (Tabula-Muris-drop)", "immature B cell-Marrow (Tabula-Muris-drop)", "mac&contam (GSE131957ccr7koTumor)", "granulocyte-Marrow (Tabula-Muris-drop)", "Immune (GSE143435D2)", "basophil-Marrow (Tabula-Muris-drop)", "DC2 (GSE131957ccr7koNaive)")
+#names(new.cluster.ids) <- levels(SeuratLymphocyte)
+#SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+Idents(SeuratLymphocyte) <- res@meta.data$type
+DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
 
 unique(unlist(meta_Lymphocyte$`Cell Subtype`))
 
-new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
-names(new.cluster.ids) <- levels(SeuratLymphocyte)
-SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
-DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+#new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
+#names(new.cluster.ids) <- levels(SeuratLymphocyte)
+#SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
+Idents(SeuratLymphocyte) <- meta_Lymphocyte$`Cell Subtype`
+DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
