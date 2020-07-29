@@ -81,7 +81,7 @@ unique(unlist(res@meta.data$type))
 #names(new.cluster.ids) <- levels(SeuratLung)
 #SeuratLung <- RenameIdents(SeuratLyung, new.cluster.ids)
 Idents(SeuratLung) <- res@meta.data$type
-DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
+InferredTypes <- DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
 
 unique(unlist(meta_Lung$cell.type))
 
@@ -89,4 +89,10 @@ unique(unlist(meta_Lung$cell.type))
 #names(new.cluster.ids) <- levels(SeuratLung)
 #SeuratLung <- RenameIdents(SeuratLung, new.cluster.ids)
 Idents(SeuratLung) <- meta_Lung$cell.type
-DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
+MetadataTypes <- DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size = 0.5)
+
+par(mfrow=c(2,1))
+{
+  InferredTypes
+  MetadataTypes
+}

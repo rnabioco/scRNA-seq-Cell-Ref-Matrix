@@ -82,12 +82,22 @@ unique(unlist(res@meta.data$type))
 #names(new.cluster.ids) <- levels(SeuratLymphocyte)
 #SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
 Idents(SeuratLymphocyte) <- res@meta.data$type
-DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
+InferredTypes <- DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
 
 unique(unlist(meta_Lymphocyte$`Cell Subtype`))
 
 #new.cluster.ids <- c("NK cell", "T cell", "B cell", "Mac III", "neutrophil", "IL cell", "Mac V", "basophil", "Mac II", "mast cell", "Mac IV", "DC III", "DC II", "DC I", "Mac I")
 #names(new.cluster.ids) <- levels(SeuratLymphocyte)
 #SeuratLymphocyte <- RenameIdents(SeuratLymphocyte, new.cluster.ids)
-Idents(SeuratLymphocyte) <- meta_Lymphocyte$`Cell Subtype`
-DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
+#SeuratLymphocyte@meta.data %>% left_join(SeuratLymphocyte@meta.data, meta_Lymphocyte$`Cell Subtype`)
+SeuratLymphocyte@meta.data %>% 
+  rownames_to_column("title") %>% 
+  left_join(meta_Lymphocyte, by = c("title")) 
+SeuratLymphocyte@meta.data$Cell.Subtype <- SeuratLymphocyte@meta.data %>% 
+  rownames_to_column("title") %>% 
+  left_join(meta_Lymphocyte, by = c("title")) %>%
+  pull("Cell Subtype")
+Idents(SeuratLymphocyte) <- SeuratLymphocyte@meta.data$`Cell.Subtype`
+MetadataTypes <- DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
+
+InferredTypes + MetadataTypes
