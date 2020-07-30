@@ -9,6 +9,7 @@ library(Matrix)
 library(ggplot2)
 library(cowplot)
 library(rlang)
+library(M3Drop)
 
 proj_dir <- here()
 proj_dir <- file.path("Reference-Matrix-Generation", "data", "atlasComparison", "GSE141259")
@@ -28,6 +29,18 @@ plot1 + plot2
 
 SeuratLung <- NormalizeData(SeuratLung)
 SeuratLung <- FindVariableFeatures(SeuratLung, selection.method = "vst", nfeatures = 2000)
+
+Normalized_data <- M3DropCleanData(SeuratLung@meta.data,
+                                   labels = rownames(SeuratLung@meta.data),
+                                   is.counts = FALSE,
+                                   suppress.plot = TRUE
+)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
+markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+                                         mt_method = "fdr",
+                                         mt_threshold = 0.01,
+                                         suppress.plot = TRUE
+)
 
 # Identify the 10 most highly variable genes
 top10 <- head(VariableFeatures(SeuratLung), 10)
@@ -71,7 +84,8 @@ res <- clustify(
   input = SeuratLung,          # a Seurat object
   ref_mat = mouseAtlas,         # matrix of RNA-seq expression data for each cell type
   cluster_col = "RNA_snn_res.0.5", # name of column in meta.data containing cell clusters
-  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
+  obj_out = TRUE,              # output SCE object with cell type inserted as "type" column
+  query_genes = markers_M3Drop$Gene
 )
 res@meta.data[1:10, ]
 saveRDS(res@meta.data, file = "clustifyLung.rds")
