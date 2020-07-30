@@ -30,8 +30,8 @@ plot1 + plot2
 SeuratLung <- NormalizeData(SeuratLung)
 SeuratLung <- FindVariableFeatures(SeuratLung, selection.method = "vst", nfeatures = 2000)
 
-Normalized_data <- M3DropCleanData(SeuratLung@meta.data,
-                                   labels = rownames(SeuratLung@meta.data),
+Normalized_data <- M3DropCleanData(SeuratLung@assays$RNA@data,
+                                   labels = rownames(SeuratLung@assays$RNA@data),
                                    is.counts = FALSE,
                                    suppress.plot = TRUE
 )
