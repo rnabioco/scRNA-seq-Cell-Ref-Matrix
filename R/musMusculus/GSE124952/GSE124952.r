@@ -7,11 +7,6 @@ library(digest)
 library(here)
 
 mat_PFC <- read_csv("ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE124nnn/GSE124952/suppl/GSE124952_expression_matrix.csv.gz")
-#Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
-#more columns than column names
-#In addition: Warning message:
-  #In read.table(file = file, header = header, sep = sep, quote = quote,  :
-#                  line 1 appears to contain embedded nulls
 mat_PFC <- mat_PFC %>%
   #as.data.frame() %>%
   column_to_rownames('X1')

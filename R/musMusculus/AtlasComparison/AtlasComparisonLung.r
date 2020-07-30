@@ -96,30 +96,28 @@ MetadataTypes <- DimPlot(SeuratLung, reduction = "umap", label = TRUE, pt.size =
 
 InferredTypes + MetadataTypes
 
-#legendA <- get_legend(
-  # create some space to the left of the legend
-#  InferredTypes + theme(legend.box.margin = margin(0,0,0, 12))
-#)
-#prow <- plot_grid(
-#  InferredTypes + theme(legend.position="none"),
-#  legendA,
-#  align = 'vh',
-#  labels = c("Lung Inferred", ""),
-#  hjust = -1,
-#  nrow = 1,
-#  scale = 1
-#  )
-#prow
-#legendB <- get_legend(
-#  MetadataTypes + theme(legend.box.margin = margin(0,0,0,12))
-#)
-#prow2 <- plot_grid(
- # MetadataTypes + theme(legend.position="none"),
- # legendB,
- # align = 'vh',
- # labels = c("Lung Metadata", ""),
- # hjust = -1,
- # nrow = 1
- # )
-#prow2
-#plot_grid(prow, prow2, ncol = 1, rel_heights = c(2, .1), rel_widths = c(3, 1))
+legendA <- get_legend(
+  InferredTypes
+)
+prow <- plot_grid(
+  plot_grid(InferredTypes + theme(legend.position="none")),
+  plot_grid(legendA),
+  labels = c("Lung Inferred", ""),
+  hjust = -1,
+  nrow = 1,
+  scale = 1
+)
+prow
+legendB <- get_legend(
+  MetadataTypes
+)
+prow2 <- plot_grid(
+  plot_grid(MetadataTypes + theme(legend.position="none")),
+  plot_grid(legendB),
+  labels = c("Lung Metadata", ""),
+  hjust = -1,
+  nrow = 1
+)
+prow2
+plot_grid(prow, prow2, ncol = 1)
+ggsave("Lung_comp.pdf", height = 10, width = 15) # note that it still wouldn't look right unless width is enough
