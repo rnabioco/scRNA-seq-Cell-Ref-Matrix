@@ -86,7 +86,10 @@ mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 3.0, verbose =
 mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = FALSE)
 mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.data)
 
-g <- clustree(mouseMetaAnalysis, 
+Idents(mouseMetaAnalysis) <- 
+sub <- subset(mouseMetaAnalysis, idents = whatevernumber)
+
+g <- clustree(sub, 
               layout = "sugiyama",
               use_core_edges = FALSE,
               node_text_size = 2,
