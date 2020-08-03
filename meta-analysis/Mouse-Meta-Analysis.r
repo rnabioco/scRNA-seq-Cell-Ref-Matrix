@@ -79,3 +79,26 @@ AnnotatedUMAP <- DimPlot(mouseMetaAnalysis, reduction = "umap", label = TRUE, pt
 HoverLocator(plot = AnnotatedUMAP, information = FetchData(mouseMetaAnalysis, vars = c("seurat_clusters")))
 mouseMetaAnalysis@meta.data$study <- str_remove(rownames(mouseMetaAnalysis@meta.data), ".+\\(") %>% str_remove("\\)")
 DimPlot(mouseMetaAnalysis, reduction = "umap", group.by = "study")
+
+#Clustree
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 1.0, verbose = FALSE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 3.0, verbose = FALSE)
+mouseMetaAnalysis <- FindClusters(mouseMetaAnalysis, resolution = 5.0, verbose = FALSE)
+mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.data)
+
+g <- clustree(mouseMetaAnalysis, 
+              layout = "sugiyama",
+              use_core_edges = FALSE,
+              node_text_size = 2,
+              node_alpha = 0,
+              edge_width = 1) + 
+  scale_edge_alpha(range = c(0.05,0.05)) + # otherwise edges cover everything up
+  geom_text(aes(x = 0, y = -10, label = "mouse", size = 2)) # just to make some room so labels aren't cut off
+
+# move the single cell layer of nodes down for more space
+gedit <- g$data[, "RNA_snn_res."] == 1000
+g$data[gedit, "y"] <- -5
+
+# rotate single cell layer texts
+g$layers[[3]]$aes_params$angle <- 90
+g
