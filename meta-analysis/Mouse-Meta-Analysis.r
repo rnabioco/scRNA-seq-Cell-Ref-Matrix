@@ -89,14 +89,25 @@ mouseMetaAnalysis@meta.data$RNA_snn_res.1000 <- rownames(mouseMetaAnalysis@meta.
 Idents(mouseMetaAnalysis) <- "RNA_snn_res.1"
 sub <- subset(mouseMetaAnalysis, idents = 6)
 
-g <- clustree(sub, 
+g <- clustree(sub,
               layout = "sugiyama",
               use_core_edges = FALSE,
-              node_text_size = 2,
+              node_text_size = 3,
               node_alpha = 0,
-              edge_width = 1) + 
+              edge_width = 7,
+              show_axis = TRUE) +
+
+#g <- clustree(sub, 
+#              layout = "sugiyama",
+#              use_core_edges = FALSE,
+#              node_size = 3,
+#              node_text_size = 3,
+#              node_alpha = 0,
+#              edge_width = 7) + 
   scale_edge_alpha(range = c(0.05,0.05)) + # otherwise edges cover everything up
-  geom_text(aes(x = 0, y = -10, label = "mouse", size = 2)) # just to make some room so labels aren't cut off
+  geom_text(aes(x = 0, y = -10, label = "mouse", size = 2)) + # just to make some room so labels aren't cut off 
+  guides(edge_size = FALSE, edge_alpha = FALSE) +
+  theme(legend.position = "bottom")
 
 # move the single cell layer of nodes down for more space
 gedit <- g$data[, "RNA_snn_res."] == 1000
