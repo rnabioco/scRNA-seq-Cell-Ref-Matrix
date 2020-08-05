@@ -17,7 +17,6 @@ gc()
 mouseMetaAnalysis <- NormalizeData(mouseMetaAnalysis, normalization.method = "LogNormalize", scale.factor = 10000)
 
 #Preprocessing workflow
-#mouseMetaAnalysis@assays$RNA@data <- mouseMetaAnalysis@assays$RNA@counts
 mouseMetaAnalysis[["percent.mt"]] <- PercentageFeatureSet(mouseMetaAnalysis, pattern = "^mt-")
 head(mouseMetaAnalysis@meta.data, 20)
 VlnPlot(mouseMetaAnalysis, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
@@ -35,7 +34,6 @@ plot1 + plot2
 #Linear dimension reduction/Run PCA
 all.genes <- rownames(mouseMetaAnalysis)
 mouseMetaAnalysis <- ScaleData(mouseMetaAnalysis, features = all.genes)
-#mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis, features = VariableFeatures(object = mouseMetaAnalysis), npcs = 49)
 mouseMetaAnalysis <- RunPCA(mouseMetaAnalysis,
                             features = all.genes,
                             npcs = ncol(mouseMetaAnalysis) - 1)
