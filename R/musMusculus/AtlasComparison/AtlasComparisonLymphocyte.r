@@ -100,4 +100,4 @@ SeuratLymphocyte@meta.data$Cell.Subtype <- SeuratLymphocyte@meta.data %>%
 Idents(SeuratLymphocyte) <- SeuratLymphocyte@meta.data$`Cell.Subtype`
 MetadataTypes <- DimPlot(SeuratLymphocyte, reduction = "umap", label = TRUE, pt.size = 0.5)
 
-InferredTypes + MetadataTypes
+InferredTypes + MetadataTypes +NoLegend()
