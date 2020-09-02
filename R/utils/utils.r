@@ -62,50 +62,70 @@ checkRawCounts <- function(GSEMatrix, max_log_value = 50)
 #' name in the final matrix. If it is not named, then the filename will be used (without .rds)
 #' @param genes_fn text file with a single column containing genes and the ordering desired
 #' in the output matrix
+#' @param matrix_objs Checks to see whether .rds files will be read or R objects in a local environment 
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
-build_atlas <- function(matrix_fns,
+build_atlas <- function(matrix_fns = NULL,
                         genes_fn,
-                        output_fn = NULL){
-
+                        matrix_objs = NULL,
+                        output_fn = NULL)
+{
   genesVector <- read_lines(genes_fn)
-
-  ref_mats <- lapply(matrix_fns, readRDS)
-
-  if(is.null(names(matrix_fns))){
-    names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
-  } else {
-    names(ref_mats) <- names(matrix_fns)
-  }
-
-  # iterate over list and get new matrices
-  new_mats <- list()
-  for(i in seq_along(ref_mats)){
-    # standardize genes in matrix
-    mat <- appendGenes(geneVector = genesVector,
-                       GSEMatrix = as.matrix(ref_mats[[i]]))
-    # get study name
-    mat_name <- names(ref_mats)[i]
-
-    # append study name to cell type names
-    new_cols <- paste0(colnames(mat),
-                       " (",
-                       mat_name,
-                       ")")
-    colnames(mat) <- new_cols
-
-    # assign to list
-    new_mats[[i]] <- mat
-  }
-
-  # cbind a list of matrices
-  atlas <- do.call(cbind, new_mats)
-
-  if(!is.null(output_fn)){
-    saveRDS(atlas, output_fn)
-  } else {
-    return(atlas)
-  }
-
+  if(is.null(matrix_obs) && !is.null(matrix_fns))
+    {
+      ref_mats <- lapply(matrix_fns, readRDS)
+      if(is.null(names(matrix_fns)))
+        {
+          names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
+        } 
+      else 
+      {
+        names(ref_mats) <- names(matrix_fns)
+      }
+    } 
+  else if(!is.null(matrix_obs)) 
+    {
+    ref_mats <- matrix_obs
+      if(is.null(names(matrix_obs)))
+        {
+          names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
+        } 
+      else 
+        {
+          names(ref_mats) <- names(matrix_obs)
+        }
+    }
+    new_mats <- list()
+    for(i in seq_along(ref_mats))
+      {
+        # standardize genes in matrix
+        mat <- appendGenes(geneVector = genesVector,
+                           GSEMatrix = as.matrix(ref_mats[[i]]))
+        # get study name
+        mat_name <- names(ref_mats)[i]
+        
+        # append study name to cell type names
+        new_cols <- paste0(colnames(mat),
+                           " (",
+                           mat_name,
+                           ")")
+        colnames(mat) <- new_cols
+        
+        # assign to list
+        new_mats[[i]] <- mat
+      }
+      
+    # cbind a list of matrices
+    atlas <- do.call(cbind, new_mats)
+      
+      if(!is.null(output_fn))
+        {
+          saveRDS(atlas, output_fn)
+        } 
+      else 
+        {
+          return(atlas)
+        }
 }
+
 
